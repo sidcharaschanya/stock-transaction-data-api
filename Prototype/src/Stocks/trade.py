@@ -3,4 +3,4 @@ class Trade:
         pass
 
     def get_trade_val(self) -> float:
-        return 0.0
+        pass

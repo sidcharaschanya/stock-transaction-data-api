@@ -1,4 +1,4 @@
-from Stocks.trade import Trade
+from src.Stocks.trade import Trade
 
 
 class StockTradeLog:

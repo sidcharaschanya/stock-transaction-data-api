@@ -1,7 +1,7 @@
 from sys import maxsize
 from unittest import TestCase
-from Stocks.stock_trade_log import StockTradeLog
-from Stocks.trade import Trade
+from src.Stocks import StockTradeLog
+from src.Stocks import Trade
 from random import Random
 
 

@@ -1,5 +1,5 @@
 from unittest import TestCase
-from Stocks.trade import Trade
+from src.Stocks import Trade
 
 
 class TestTrade(TestCase):

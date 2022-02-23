@@ -1,7 +1,7 @@
 from sys import maxsize
 from unittest import TestCase
-from src.socks import StockTradeLog
-from src.socks import Trade
+from stocks import StockTradeLog
+from stocks import Trade
 from random import Random
 
 

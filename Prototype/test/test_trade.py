@@ -1,5 +1,5 @@
 from unittest import TestCase
-from src.socks import Trade
+from stocks import Trade
 
 
 class TestTrade(TestCase):

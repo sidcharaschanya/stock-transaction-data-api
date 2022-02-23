@@ -1,4 +1,4 @@
-from src.Stocks.trade import Trade
+from src.socks.trade import Trade
 
 
 class StockTradeLog:

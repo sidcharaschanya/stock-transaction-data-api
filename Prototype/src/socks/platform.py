@@ -1,6 +1,6 @@
-from src.Stocks.trade import Trade
-from src.Stocks.stock_list import STOKCS
-from src.Stocks.stock_trade_log import StockTradeLog
+from src.socks.trade import Trade
+from src.socks.stock_list import STOKCS
+from src.socks.stock_trade_log import StockTradeLog
 
 
 class StockTradingPlatform:

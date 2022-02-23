@@ -1,4 +1,4 @@
-from stocks.trade import Trade
+from stonks.trade import Trade
 
 
 class StockTradeLog:

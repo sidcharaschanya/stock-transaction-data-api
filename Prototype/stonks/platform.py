@@ -1,6 +1,6 @@
-from stocks.trade import Trade
-from stocks.stock_list import STOKCS
-from stocks.stock_trade_log import StockTradeLog
+from stonks.trade import Trade
+from stonks.stock_list import STOKCS
+from stonks.stock_trade_log import StockTradeLog
 
 
 class StockTradingPlatform:

@@ -1,5 +1,5 @@
 from unittest import TestCase
-from stonks import Trade
+from stocks.trade import Trade
 
 
 class TestTrade(TestCase):

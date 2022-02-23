@@ -1,9 +1,8 @@
 from sys import maxsize
 from unittest import TestCase
-from stonks import StockTradeLog
-from stonks import Trade
+from stocks.stock_trade_log import StockTradeLog
+from stocks.trade import Trade
 from random import Random
-
 
 LOW_TRADE = Trade("Barclays", 5, 3, "2021-01-01T13:47:00.00")
 HIGH_TRADE = Trade("Barclays", 12341234, 34, "2022-03-01T17:28:29.00")

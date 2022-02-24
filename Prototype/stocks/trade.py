@@ -1,5 +1,4 @@
 from datetime import datetime
-from typing import Tuple
 
 
 class Trade:
@@ -11,6 +10,3 @@ class Trade:
 
     def get_trade_val(self) -> float:
         return self.stock_price * self.stock_quantity
-
-    def get_key(self) -> Tuple[float, datetime]:
-        return self.get_trade_val(), self.stock_time

@@ -1,35 +1,35 @@
-from stocks.transaction_record import TransactionRecord
+from stocks.trade import Trade
 from stocks.stock_list import STOCK_LIST
-from stocks.stock_trade_log import StockTradeLog
+from stocks.trade_tree import TradeTree
 from datetime import datetime
 from typing import List
 
-TransactionRecordList = List[str, float, int, datetime]
+TradeList = List[str, float, int, datetime]
 
 
 class StockTradingPlatform:
     def __init__(self):
         self.trade_log = {}
         for stock in STOCK_LIST:
-            self.trade_log[stock] = StockTradeLog(stock)
+            self.trade_log[stock] = TradeTree(stock)
 
-    def log_transaction(self, transaction_record: TransactionRecordList) -> None:
+    def log_transaction(self, transaction_record: TradeList) -> None:
         pass
 
-    def sorted_transactions(self, stock_name: str) -> List[TransactionRecord]:
+    def sorted_transactions(self, stock_name: str) -> List[Trade]:
         pass
 
-    def min_transactions(self, stock_name: str) -> List[TransactionRecord]:
+    def min_transactions(self, stock_name: str) -> List[Trade]:
         pass
 
-    def max_transactions(self, stock_name: str) -> List[TransactionRecord]:
+    def max_transactions(self, stock_name: str) -> List[Trade]:
         pass
 
-    def floor_transactions(self, stock_name: str, threshold_value: float) -> List[TransactionRecord]:
+    def floor_transactions(self, stock_name: str, threshold_value: float) -> List[Trade]:
         pass
 
-    def ceiling_transactions(self, stock_name: str, threshold_value: float) -> List[TransactionRecord]:
+    def ceiling_transactions(self, stock_name: str, threshold_value: float) -> List[Trade]:
         pass
 
-    def range_transactions(self, stock_name: str, from_value: float, to_value: float) -> List[TransactionRecord]:
+    def range_transactions(self, stock_name: str, from_value: float, to_value: float) -> List[Trade]:
         pass

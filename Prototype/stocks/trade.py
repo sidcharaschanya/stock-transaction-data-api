@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import Tuple
 
 
-class TransactionRecord:
+class Trade:
     def __init__(self, stock_name: str, stock_price: float, stock_quantity: int, stock_time: datetime) -> None:
         self.stock_name = stock_name
         self.stock_price = stock_price

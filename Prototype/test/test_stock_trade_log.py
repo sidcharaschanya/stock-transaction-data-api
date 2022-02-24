@@ -1,20 +1,20 @@
 from sys import maxsize
 from unittest import TestCase
-from stocks.stock_trade_log import StockTradeLog
-from stocks.transaction_record import TransactionRecord
+from stocks.trade_tree import TradeTree
+from stocks.trade import Trade
 from random import Random
 
-LOW_TRADE = TransactionRecord("Barclays", 5, 3, "2021-01-01T13:47:00.00")
-HIGH_TRADE = TransactionRecord("Barclays", 12341234, 34, "2022-03-01T17:28:29.00")
+LOW_TRADE = Trade("Barclays", 5, 3, "2021-01-01T13:47:00.00")
+HIGH_TRADE = Trade("Barclays", 12341234, 34, "2022-03-01T17:28:29.00")
 STOCK = "Barclays"
-STOCK_LIST = [TransactionRecord(STOCK, 47, 5, "2021-01-01T11:21:00.00"),
-              TransactionRecord(STOCK, 116, 1, "2021-01-01T11:21:00.00"),
-              TransactionRecord(STOCK, 333, 3, "2021-01-01T11:21:00.00")]
+STOCK_LIST = [Trade(STOCK, 47, 5, "2021-01-01T11:21:00.00"),
+              Trade(STOCK, 116, 1, "2021-01-01T11:21:00.00"),
+              Trade(STOCK, 333, 3, "2021-01-01T11:21:00.00")]
 
 FULL_LIST = [LOW_TRADE,
-             TransactionRecord(STOCK, 47, 5, "2021-01-01T11:21:00.00"),
-             TransactionRecord(STOCK, 116, 1, "2021-01-01T11:21:00.00"),
-             TransactionRecord(STOCK, 333, 3, "2021-01-01T11:21:00.00"),
+             Trade(STOCK, 47, 5, "2021-01-01T11:21:00.00"),
+             Trade(STOCK, 116, 1, "2021-01-01T11:21:00.00"),
+             Trade(STOCK, 333, 3, "2021-01-01T11:21:00.00"),
              HIGH_TRADE]
 
 
@@ -23,8 +23,8 @@ def __construct_helper(t, log):
     log.add_trade(t)
 
 
-def busy_constructor() -> StockTradeLog:
-    log = StockTradeLog(STOCK)
+def busy_constructor() -> TradeTree:
+    log = TradeTree(STOCK)
     log.add_trade(LOW_TRADE)
     log.add_trade(HIGH_TRADE)
 
@@ -36,19 +36,19 @@ def busy_constructor() -> StockTradeLog:
 
 class TestStockTradeLog(TestCase):
 
-    def _check_constructed(self, log: StockTradeLog):
+    def _check_constructed(self, log: TradeTree):
         self.assertEqual(log.get_min_trade(), [LOW_TRADE])
         self.assertEqual(log.get_max_trade(), [HIGH_TRADE])
 
-    def _test_trade_add(self, log: StockTradeLog, t: TransactionRecord):
+    def _test_trade_add(self, log: TradeTree, t: Trade):
         log.add_trade(t)
 
         self.assertEqual(log.get_trade_in_range(
             t.get_trade_val(), t.get_trade_val()), [t])
 
     def test_add_trade_empty(self):
-        log = StockTradeLog(STOCK)
-        t = TransactionRecord("Barclays", 123.4, 3, "2022-02-22T17:28:04.00")
+        log = TradeTree(STOCK)
+        t = Trade("Barclays", 123.4, 3, "2022-02-22T17:28:04.00")
 
         self._test_trade_add(log, t)
         self.assertEqual(log.get_min_trade(), [t])
@@ -56,7 +56,7 @@ class TestStockTradeLog(TestCase):
 
     def test_add_trade_busy(self):
         log = busy_constructor()
-        t = TransactionRecord("Barclays", 123.4, 3, "2022-02-22T17:28:04.00")
+        t = Trade("Barclays", 123.4, 3, "2022-02-22T17:28:04.00")
 
         self._test_trade_add(log, t)
         self._check_constructed(log)
@@ -66,13 +66,13 @@ class TestStockTradeLog(TestCase):
         log = busy_constructor()
 
         for _ in range(100):
-            t = TransactionRecord("Barclays", r.random() * 100 + 50, r.randint(2, 10), "2021-06-13T05:37:00.00")
+            t = Trade("Barclays", r.random() * 100 + 50, r.randint(2, 10), "2021-06-13T05:37:00.00")
 
             self._test_trade_add(log, t)
             self._check_constructed(log)
 
     def test_bad_stock(self):
-        t = TransactionRecord("Lloyds", 23.4, 1, "2021-01-01T00:00:01.01")
+        t = Trade("Lloyds", 23.4, 1, "2021-01-01T00:00:01.01")
         log = busy_constructor()
 
         try:

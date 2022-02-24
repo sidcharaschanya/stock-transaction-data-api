@@ -1,16 +1,16 @@
 from stocks.trade import Trade
-from stocks.stock_list import STOCK_LIST
+from stocks.stock_list import STOCKS
 from stocks.trade_tree import TradeTree
-from datetime import datetime
+import datetime as d
 from typing import List
 
-TradeList = List[str, float, int, datetime]
+TradeList = List[str, float, int, d.datetime]
 
 
 class StockTradingPlatform:
     def __init__(self):
         self.trade_log = {}
-        for stock in STOCK_LIST:
+        for stock in STOCKS:
             self.trade_log[stock] = TradeTree(stock)
 
     def log_transaction(self, transaction_record: TradeList) -> None:

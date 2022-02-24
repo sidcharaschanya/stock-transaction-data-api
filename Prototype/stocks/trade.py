@@ -1,12 +1,15 @@
-from datetime import datetime
+import datetime as d
 
 
 class Trade:
-    def __init__(self, stock_name: str, stock_price: float, stock_quantity: int, stock_time: datetime) -> None:
-        self.stock_name = stock_name
-        self.stock_price = stock_price
-        self.stock_quantity = stock_quantity
-        self.stock_time = stock_time
+    def __init__(self, name: str, price: float, quantity: int, time: d.datetime) -> None:
+        self.name = name
+        self.price = price
+        self.quantity = quantity
+        self.time = time
 
     def get_trade_val(self) -> float:
-        return self.stock_price * self.stock_quantity
+        return self.price * self.quantity
+
+    def to_list(self):
+        return [self.name, self.price, self.quantity, self.time]

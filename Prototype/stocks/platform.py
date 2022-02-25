@@ -2,9 +2,9 @@ from stocks.trade import Trade
 from stocks.stock_list import STOCKS
 from stocks.trade_tree import TradeTree
 import datetime as d
-from typing import List
+import typing as t
 
-TradeList = List[str, float, int, d.datetime]
+TradeList = t.List[str, float, int, d.datetime]
 
 
 class StockTradingPlatform:
@@ -16,20 +16,20 @@ class StockTradingPlatform:
     def log_transaction(self, transaction_record: TradeList) -> None:
         pass
 
-    def sorted_transactions(self, stock_name: str) -> List[Trade]:
+    def sorted_transactions(self, stock_name: str) -> t.List[Trade]:
         pass
 
-    def min_transactions(self, stock_name: str) -> List[Trade]:
+    def min_transactions(self, stock_name: str) -> t.List[Trade]:
         pass
 
-    def max_transactions(self, stock_name: str) -> List[Trade]:
+    def max_transactions(self, stock_name: str) -> t.List[Trade]:
         pass
 
-    def floor_transactions(self, stock_name: str, threshold_value: float) -> List[Trade]:
+    def floor_transactions(self, stock_name: str, threshold_value: float) -> t.List[Trade]:
         pass
 
-    def ceiling_transactions(self, stock_name: str, threshold_value: float) -> List[Trade]:
+    def ceiling_transactions(self, stock_name: str, threshold_value: float) -> t.List[Trade]:
         pass
 
-    def range_transactions(self, stock_name: str, from_value: float, to_value: float) -> List[Trade]:
+    def range_transactions(self, stock_name: str, from_value: float, to_value: float) -> t.List[Trade]:
         pass

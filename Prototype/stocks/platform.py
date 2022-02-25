@@ -4,8 +4,6 @@ from stocks.trade_tree import TradeTree
 import datetime as d
 import typing as t
 
-TradeList = t.List[str, float, int, d.datetime]
-
 
 class StockTradingPlatform:
     def __init__(self):
@@ -13,7 +11,7 @@ class StockTradingPlatform:
         for stock in STOCKS:
             self.trade_log[stock] = TradeTree(stock)
 
-    def log_transaction(self, transaction_record: TradeList) -> None:
+    def log_transaction(self, transaction_record: t.List[str, float, int, d.datetime]) -> None:
         pass
 
     def sorted_transactions(self, stock_name: str) -> t.List[Trade]:

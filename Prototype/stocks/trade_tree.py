@@ -1,5 +1,5 @@
-from stocks.trade_node import TradeNode
 from stocks.trade import Trade
+from stocks.trade_node import TradeNode
 import datetime as d
 import typing as t
 

@@ -6,9 +6,9 @@ import typing as t
 
 class StockTradingPlatform:
     def __init__(self) -> None:
-        self.trade_log = {}
+        self.trade_trees = {}
         for stock in STOCKS:
-            self.trade_log[stock] = TradeTree(stock)
+            self.trade_trees[stock] = TradeTree(stock)
 
     def log_transaction(self, transaction_record: list) -> None:
         pass

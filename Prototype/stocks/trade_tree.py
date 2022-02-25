@@ -1,69 +1,59 @@
+from stocks.trade_node import TradeNode
 from stocks.trade import Trade
 import datetime as d
 import typing as t
 
 
-class Node:
-    def __init__(self, trade: Trade):
-        self.key = trade.get_trade_val()
-        self.value = [trade]
-        self.left = None
-        self.right = None
-
-    def to_dict(self):
-        return {self.key: [trade.to_list() for trade in self.value]}
-
-
 class TradeTree:
-    def __init__(self, stock_name: str):
+    def __init__(self, stock_name: str) -> None:
         self.stock_name = stock_name
         self.root = None
 
-    def put_trade(self, trade: Trade, node: Node = None) -> None:
+    def put_trade(self, trade: Trade, node: TradeNode = None) -> None:
         if trade.name != self.stock_name:
             print("Invalid stock name")
             return
 
         if self.root is None:
-            self.root = Node(trade)
+            self.root = TradeNode(trade)
             return
 
         if node is None:
             node = self.root
 
-        key = trade.get_trade_val()
+        trade_val = trade.get_trade_val()
 
-        if key == node.key:
-            node.value.append(trade)
-        elif key < node.key:
+        if trade_val == node.trade_val:
+            node.trades.append(trade)
+        elif trade_val < node.trade_val:
             if node.left is None:
-                node.left = Node(trade)
+                node.left = TradeNode(trade)
             else:
                 self.put_trade(trade, node.left)
-        elif key > node.key:
+        elif trade_val > node.trade_val:
             if node.right is None:
-                node.right = Node(trade)
+                node.right = TradeNode(trade)
             else:
                 self.put_trade(trade, node.right)
 
-    def get_all_trades(self, node: Node = None) -> t.List[Trade]:
+    def get_all_trades(self, node: TradeNode = None) -> t.List[Trade]:
         if self.root is None:
             return []
 
         if node is None:
             node = self.root
 
-        trades = []
+        all_trades = []
 
         if node.left is not None:
-            trades = self.get_all_trades(node.left)
+            all_trades = self.get_all_trades(node.left)
 
-        trades += node.value
+        all_trades += node.trades
 
         if node.right is not None:
-            trades += self.get_all_trades(node.right)
+            all_trades += self.get_all_trades(node.right)
 
-        return trades
+        return all_trades
 
     def get_min_trades(self) -> t.List[Trade]:
         if self.root is None:
@@ -74,7 +64,7 @@ class TradeTree:
         while node.left is not None:
             node = node.left
 
-        return node.value
+        return node.trades
 
     def get_max_trades(self) -> t.List[Trade]:
         if self.root is None:
@@ -85,15 +75,15 @@ class TradeTree:
         while node.right is not None:
             node = node.right
 
-        return node.value
+        return node.trades
 
-    def get_floor_trades(self, low_bound: float) -> t.List[Trade]:
+    def get_floor_trades(self, low: float) -> t.List[Trade]:
         pass
 
-    def get_ceil_trades(self, high_bound: float) -> t.List[Trade]:
+    def get_ceil_trades(self, high: float) -> t.List[Trade]:
         pass
 
-    def get_trades_in_range(self, low_bound: float, high_bound: float) -> t.List[Trade]:
+    def get_trades_in_range(self, low: float, high: float) -> t.List[Trade]:
         pass
 
 
@@ -104,16 +94,16 @@ if __name__ == '__main__':
     t3 = Trade("test_stock", 99.9, 10, st + d.timedelta(seconds = 9))
     t4 = Trade("test_stock", 99.9, 10, st + d.timedelta(seconds = 12))
 
-    trade_tree = TradeTree("test_stock")
-    trade_tree.put_trade(t1)
-    trade_tree.put_trade(t2)
-    trade_tree.put_trade(t3)
-    trade_tree.put_trade(t4)
+    tree = TradeTree("test_stock")
+    tree.put_trade(t1)
+    tree.put_trade(t2)
+    tree.put_trade(t3)
+    tree.put_trade(t4)
 
-    print(trade_tree.root.left.to_dict())
-    print(trade_tree.root.to_dict())
-    print(trade_tree.root.right.to_dict())
-    print([trade.get_trade_val() for trade in trade_tree.get_all_trades()])
-    print(trade_tree.get_all_trades())
-    print(trade_tree.get_min_trades())
-    print(trade_tree.get_max_trades())
+    print(tree.root.left.to_dict())
+    print(tree.root.to_dict())
+    print(tree.root.right.to_dict())
+    print([trade.get_trade_val() for trade in tree.get_all_trades()])
+    print(tree.get_all_trades())
+    print(tree.get_min_trades())
+    print(tree.get_max_trades())

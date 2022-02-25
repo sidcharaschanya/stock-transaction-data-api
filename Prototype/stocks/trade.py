@@ -11,5 +11,5 @@ class Trade:
     def get_trade_val(self) -> float:
         return self.price * self.quantity
 
-    def to_list(self):
+    def to_list(self) -> list:
         return [self.name, self.price, self.quantity, self.time]

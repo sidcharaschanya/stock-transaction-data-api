@@ -8,8 +8,8 @@ class StockTradingPlatform:
         self.STOCKS = {"Barclays", "HSBA", "Lloyds", "Banking Group", "NatWest Group", "Standard Chartered", "3i",
                        "Abrdn", "Hargreaves Lansdown", "London Stock Exchange Group", "Pershing Square Holdings",
                        "Schroders", "St. James's Place plc."}
-
         self.__trade_trees = {}
+
         for stock in self.STOCKS:
             self.__trade_trees[stock] = TradeTree(stock)
 
@@ -65,10 +65,10 @@ class StockTradingPlatform:
 
     def __validate_trade(self, trade: Trade) -> None:
         if trade.name not in self.STOCKS:
-            raise ValueError("Bad Name " + trade.name)
+            raise ValueError("Bad name " + trade.name)
 
         if trade.quantity < 1:
             raise ValueError("Bad quantity " + str(trade.quantity))
 
         if trade.price <= 0.0:
-            raise ValueError("Bad Price " + str(trade.price))
+            raise ValueError("Bad price " + str(trade.price))

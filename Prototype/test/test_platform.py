@@ -1,7 +1,7 @@
 from unittest import TestCase
-from platform import StockTradingPlatform
+from stocks.platform import StockTradingPlatform
 from datetime import datetime
-from trade import Trade
+from stocks.trade import Trade
 from gen_test_sets import TestSets
 
 test_sets = TestSets()
@@ -52,7 +52,7 @@ class TestStockTradingPlatform(TestCase):
     def test_log_many_of_one(self):
         # This generates 100 trades for HSBA with a min value of 100 and a max value of 100000
         # It is guaranteed that at least one trade exists with a value of 100 and one exists with a value of 100000
-        test_trades = test_sets.trade_gen_many_same_stock(stock="HSBA", min_val=100, max_val=100000)
+        test_trades = test_sets.trade_gen_many_same_stock(stock = "HSBA", min_val = 100, max_val = 100000)
 
         sut = StockTradingPlatform()
 
@@ -100,7 +100,7 @@ class TestStockTradingPlatform(TestCase):
 
     def test_log_some_conflicts(self):
         trades1 = test_sets.trade_gen_many_same_value(550)
-        trades2 = test_sets.trade_gen_many(min_val=1000, max_val=100000)
+        trades2 = test_sets.trade_gen_many(min_val = 1000, max_val = 100000)
         sut = StockTradingPlatform()
 
         for trade in trades1 + trades2:

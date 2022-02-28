@@ -1,8 +1,8 @@
 from datetime import datetime, timedelta
 from random import choice, seed, uniform, randint
-from platform import StockTradingPlatform
-from trade import Trade
-from trade_tree import TradeTree
+from stocks.platform import StockTradingPlatform
+from stocks.trade import Trade
+from stocks.trade_tree import TradeTree
 
 
 class TestSets:
@@ -21,10 +21,10 @@ class TestSets:
         if min_val == max_val:
             return min_val, 1
 
-        if max_val/5 < min_val:
+        if max_val / 5 < min_val:
             return round(uniform(min_val, max_val)), 1
 
-        return round(uniform(min_val, max_val/5)), randint(1, 5)
+        return round(uniform(min_val, max_val / 5)), randint(1, 5)
 
     def gen_one_trade(self, stock, min_val, max_val):
         self.__time_offset += 1
@@ -32,17 +32,17 @@ class TestSets:
 
         return Trade(stock,
                      value[0], value[1],
-                     self.__start_date + timedelta(seconds=self.__time_offset))
+                     self.__start_date + timedelta(seconds = self.__time_offset))
 
     def trade_gen_many_same_stock(self, stock: str = "HSBA", min_val: int = 1, max_val: int = 100000) -> list[Trade]:
         trade_list = []
         self.__time_offset += 1
-        trade_list.append(Trade(stock, min_val, 1, self.__start_date + timedelta(seconds=self.__time_offset)))
+        trade_list.append(Trade(stock, min_val, 1, self.__start_date + timedelta(seconds = self.__time_offset)))
 
         for _ in range(98):
             trade_list.append(self.gen_one_trade(stock, min_val, max_val))
 
-        trade_list.append(Trade(stock, max_val, 1, self.__start_date + timedelta(seconds=self.__time_offset)))
+        trade_list.append(Trade(stock, max_val, 1, self.__start_date + timedelta(seconds = self.__time_offset)))
 
         return trade_list
 

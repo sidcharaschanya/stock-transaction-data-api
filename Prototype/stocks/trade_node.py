@@ -16,5 +16,5 @@ class TradeNode:
         # This has a performance advantage over storing the trade as a dictionary; list lookup is much
         # faster than kv lookup and takes better advantage of locality
 
-        # Maps Trade value to trade information in list form
+        # Maps trade value to trade information in list form
         return {self.trade_val: [trade.to_list() for trade in self.trades]}

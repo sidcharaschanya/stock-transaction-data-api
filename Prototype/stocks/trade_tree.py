@@ -14,10 +14,8 @@ class TradeTree:
         self.root = None
 
     def put_trade(self, trade: Trade, node: TradeNode = None) -> None:
-        # TODO: throw an exception here
         if trade.name != self.stock_name:
-            print("Invalid stock name")
-            return
+            raise ValueError("Invalid stock name")
 
         if self.root is None:
             self.root = TradeNode(trade)
@@ -97,10 +95,10 @@ class TradeTree:
 if __name__ == '__main__':
     # TODO: chuck this for final rev.
     st = d.datetime.strptime('1/1/2022 1:00:00', '%d/%m/%Y %H:%M:%S')
-    t1 = Trade("test_stock", 89.9, 10, st + d.timedelta(seconds=3))
-    t2 = Trade("test_stock", 79.9, 10, st + d.timedelta(seconds=6))
-    t3 = Trade("test_stock", 99.9, 10, st + d.timedelta(seconds=9))
-    t4 = Trade("test_stock", 99.9, 10, st + d.timedelta(seconds=12))
+    t1 = Trade("test_stock", 89.9, 10, st + d.timedelta(seconds = 3))
+    t2 = Trade("test_stock", 79.9, 10, st + d.timedelta(seconds = 6))
+    t3 = Trade("test_stock", 99.9, 10, st + d.timedelta(seconds = 9))
+    t4 = Trade("test_stock", 99.9, 10, st + d.timedelta(seconds = 12))
 
     tree = TradeTree("test_stock")
     tree.put_trade(t1)

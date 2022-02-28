@@ -12,4 +12,5 @@ class Trade:
         return self.price * self.quantity
 
     def to_list(self) -> list:
+        # Note: Converting to list makes it easier to work with in some applications and can have performance advantages
         return [self.name, self.price, self.quantity, self.time]

@@ -1,15 +1,20 @@
-from stocks.trade import Trade
-from stocks.trade_node import TradeNode
+from trade import Trade
+from trade_node import TradeNode
 import datetime as d
 import typing as t
 
 
 class TradeTree:
+    # TradeTree models all information for a single stock
+    # i.e. all trades on a given stock will be stored here
+    # This has no model of any other stocks
+
     def __init__(self, stock_name: str) -> None:
         self.stock_name = stock_name
         self.root = None
 
     def put_trade(self, trade: Trade, node: TradeNode = None) -> None:
+        # TODO: throw an exception here
         if trade.name != self.stock_name:
             print("Invalid stock name")
             return
@@ -18,6 +23,7 @@ class TradeTree:
             self.root = TradeNode(trade)
             return
 
+        # Node parameter is used to construct from a partial previous tree or a subtree
         if node is None:
             node = self.root
 
@@ -40,6 +46,7 @@ class TradeTree:
         if self.root is None:
             return []
 
+        # Optional node parameter used to display some other tree or some subtree
         if node is None:
             node = self.root
 
@@ -88,11 +95,12 @@ class TradeTree:
 
 
 if __name__ == '__main__':
+    # TODO: chuck this for final rev.
     st = d.datetime.strptime('1/1/2022 1:00:00', '%d/%m/%Y %H:%M:%S')
-    t1 = Trade("test_stock", 89.9, 10, st + d.timedelta(seconds = 3))
-    t2 = Trade("test_stock", 79.9, 10, st + d.timedelta(seconds = 6))
-    t3 = Trade("test_stock", 99.9, 10, st + d.timedelta(seconds = 9))
-    t4 = Trade("test_stock", 99.9, 10, st + d.timedelta(seconds = 12))
+    t1 = Trade("test_stock", 89.9, 10, st + d.timedelta(seconds=3))
+    t2 = Trade("test_stock", 79.9, 10, st + d.timedelta(seconds=6))
+    t3 = Trade("test_stock", 99.9, 10, st + d.timedelta(seconds=9))
+    t4 = Trade("test_stock", 99.9, 10, st + d.timedelta(seconds=12))
 
     tree = TradeTree("test_stock")
     tree.put_trade(t1)

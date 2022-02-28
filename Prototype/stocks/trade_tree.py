@@ -88,8 +88,29 @@ class TradeTree:
     def get_ceil_trades(self, high: float) -> t.List[Trade]:
         pass
 
-    def get_trades_in_range(self, low: float, high: float) -> t.List[Trade]:
-        pass
+    def get_trades_in_range(self, low: float, high: float, node: TradeNode = None) -> t.List[Trade]:
+        if self.root is None:
+            return []
+
+        if node is None:
+            node = self.root
+
+        trades_in_range = []
+
+        if low <= node.trade_val <= high:
+            if node.left is not None:
+                trades_in_range = self.get_trades_in_range(low, high, node.left)
+
+            trades_in_range += node.trades
+
+            if node.right is not None:
+                trades_in_range += self.get_trades_in_range(low, high, node.right)
+        elif node.trade_val < low and node.right is not None:
+            trades_in_range = self.get_trades_in_range(low, high, node.right)
+        elif node.trade_val > high and node.left is not None:
+            trades_in_range = self.get_trades_in_range(low, high, node.left)
+
+        return trades_in_range
 
 
 if __name__ == '__main__':
@@ -113,3 +134,4 @@ if __name__ == '__main__':
     print(tree.get_all_trades())
     print(tree.get_min_trades())
     print(tree.get_max_trades())
+    print(tree.get_trades_in_range(800, 999))

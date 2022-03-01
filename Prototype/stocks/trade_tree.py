@@ -53,10 +53,10 @@ class TradeTree:
         if node.left is not None:
             all_trades = self.get_all_trades(node.left)
 
-        all_trades += node.trades
+        all_trades.extend(node.trades)
 
         if node.right is not None:
-            all_trades += self.get_all_trades(node.right)
+            all_trades.extend(self.get_all_trades(node.right))
 
         return all_trades
 
@@ -101,10 +101,10 @@ class TradeTree:
             if node.left is not None:
                 trades_in_range = self.get_trades_in_range(low, high, node.left)
 
-            trades_in_range += node.trades
+            trades_in_range.extend(node.trades)
 
             if node.right is not None:
-                trades_in_range += self.get_trades_in_range(low, high, node.right)
+                trades_in_range.extend(self.get_trades_in_range(low, high, node.right))
         elif node.trade_val < low and node.right is not None:
             trades_in_range = self.get_trades_in_range(low, high, node.right)
         elif node.trade_val > high and node.left is not None:

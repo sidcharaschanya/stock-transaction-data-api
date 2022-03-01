@@ -109,21 +109,21 @@ class TradeTree:
 
     @staticmethod
     def __rotate_left(node: TradeNode) -> TradeNode:
-        temp = node.right
-        node.right = temp.left
-        temp.left = node
-        temp.color = node.color
+        x = node.right
+        node.right = x.left
+        x.left = node
+        x.color = node.color
         node.color = TradeNode.RED
-        return temp
+        return x
 
     @staticmethod
     def __rotate_right(node: TradeNode) -> TradeNode:
-        temp = node.left
-        node.left = temp.right
-        temp.right = node
-        temp.color = node.color
+        x = node.left
+        node.left = x.right
+        x.right = node
+        x.color = node.color
         node.color = TradeNode.RED
-        return temp
+        return x
 
     @staticmethod
     def __flip_colors(node: TradeNode) -> None:

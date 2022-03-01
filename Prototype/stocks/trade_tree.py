@@ -13,32 +13,27 @@ class TradeTree:
         self.stock_name = stock_name
         self.root = None
 
-    def put_trade(self, trade: Trade, node: TradeNode = None) -> None:
+    def put_trade(self, trade: Trade) -> None:
+        self.root = self.__insert(trade, self.root)
+        self.root.color = TradeNode.BLACK
+
+    def __insert(self, trade: Trade, node: TradeNode) -> TradeNode:
         if trade.name != self.stock_name:
             raise ValueError("Invalid stock name")
 
-        if self.root is None:
-            self.root = TradeNode(trade)
-            return
-
-        # Node parameter is used to construct from a partial previous tree or a subtree
         if node is None:
-            node = self.root
+            return TradeNode(trade)
 
         trade_val = trade.get_trade_val()
 
         if trade_val == node.trade_val:
             node.trades.append(trade)
         elif trade_val < node.trade_val:
-            if node.left is None:
-                node.left = TradeNode(trade)
-            else:
-                self.put_trade(trade, node.left)
+            node.left = self.__insert(trade, node.left)
         elif trade_val > node.trade_val:
-            if node.right is None:
-                node.right = TradeNode(trade)
-            else:
-                self.put_trade(trade, node.right)
+            node.right = self.__insert(trade, node.right)
+
+        return TradeTree.__balance(node)
 
     def get_all_trades(self, node: TradeNode = None) -> t.List[Trade]:
         if self.root is None:
@@ -112,12 +107,53 @@ class TradeTree:
 
         return trades_in_range
 
+    @staticmethod
+    def __rotate_left(node: TradeNode) -> TradeNode:
+        temp = node.right
+        node.right = temp.left
+        temp.left = node
+        temp.color = node.color
+        node.color = TradeNode.RED
+        return temp
+
+    @staticmethod
+    def __rotate_right(node: TradeNode) -> TradeNode:
+        temp = node.left
+        node.left = temp.right
+        temp.right = node
+        temp.color = node.color
+        node.color = TradeNode.RED
+        return temp
+
+    @staticmethod
+    def __flip_colors(node: TradeNode) -> None:
+        node.color = TradeNode.RED
+        node.left.color = TradeNode.BLACK
+        node.right.color = TradeNode.BLACK
+
+    @staticmethod
+    def __is_red(node: TradeNode) -> bool:
+        return node.color == TradeNode.RED if node is not None else False
+
+    @staticmethod
+    def __balance(node: TradeNode) -> TradeNode:
+        if TradeTree.__is_red(node.right) and not TradeTree.__is_red(node.left):
+            node = TradeTree.__rotate_left(node)
+
+        if TradeTree.__is_red(node.left) and TradeTree.__is_red(node.left.left):
+            node = TradeTree.__rotate_right(node)
+
+        if TradeTree.__is_red(node.left) and TradeTree.__is_red(node.right):
+            TradeTree.__flip_colors(node)
+
+        return node
+
 
 if __name__ == '__main__':
     # TODO: chuck this for final rev.
     st = d.datetime.strptime('1/1/2022 1:00:00', '%d/%m/%Y %H:%M:%S')
-    t1 = Trade("test_stock", 89.9, 10, st + d.timedelta(seconds = 3))
-    t2 = Trade("test_stock", 79.9, 10, st + d.timedelta(seconds = 6))
+    t1 = Trade("test_stock", 79.9, 10, st + d.timedelta(seconds = 3))
+    t2 = Trade("test_stock", 89.9, 10, st + d.timedelta(seconds = 6))
     t3 = Trade("test_stock", 99.9, 10, st + d.timedelta(seconds = 9))
     t4 = Trade("test_stock", 99.9, 10, st + d.timedelta(seconds = 12))
 

@@ -3,6 +3,7 @@ from random import choice, seed, uniform, randint
 from stocks.platform import StockTradingPlatform
 from stocks.trade import Trade
 from stocks.trade_tree import TradeTree
+import typing as t
 
 
 class TestSets:
@@ -17,7 +18,7 @@ class TestSets:
         seed(20221603)
         self.__time_offset = 0
 
-    def __get_value(self, min_val, max_val) -> tuple[int, int]:
+    def __get_value(self, min_val, max_val) -> t.Tuple[int, int]:
         if min_val == max_val:
             return min_val, 1
 
@@ -34,7 +35,7 @@ class TestSets:
                      value[0], value[1],
                      self.__start_date + timedelta(seconds = self.__time_offset))
 
-    def trade_gen_many_same_stock(self, stock: str = "HSBA", min_val: int = 1, max_val: int = 100000) -> list[Trade]:
+    def trade_gen_many_same_stock(self, stock: str = "HSBA", min_val: int = 1, max_val: int = 100000) -> t.List[Trade]:
         trade_list = []
         self.__time_offset += 1
         trade_list.append(Trade(stock, min_val, 1, self.__start_date + timedelta(seconds = self.__time_offset)))
@@ -46,7 +47,7 @@ class TestSets:
 
         return trade_list
 
-    def trade_gen_many_same_value(self, value: float) -> list[Trade]:
+    def trade_gen_many_same_value(self, value: float) -> t.List[Trade]:
         trade_list = []
 
         for i in range(100):
@@ -54,7 +55,7 @@ class TestSets:
 
         return trade_list
 
-    def trade_gen_many(self, min_val: int = 1, max_val: int = 100000) -> list[Trade]:
+    def trade_gen_many(self, min_val: int = 1, max_val: int = 100000) -> t.List[Trade]:
         trade_list = []
 
         for _ in range(100):

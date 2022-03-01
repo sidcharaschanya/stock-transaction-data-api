@@ -5,9 +5,11 @@ import typing as t
 
 class StockTradingPlatform:
     def __init__(self) -> None:
+        # noinspection SpellCheckingInspection
         self.STOCKS = {"Barclays", "HSBA", "Lloyds", "Banking Group", "NatWest Group", "Standard Chartered", "3i",
                        "Abrdn", "Hargreaves Lansdown", "London Stock Exchange Group", "Pershing Square Holdings",
                        "Schroders", "St. James's Place plc."}
+
         self.__trade_trees = {}
 
         for stock in self.STOCKS:

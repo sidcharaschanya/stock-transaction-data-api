@@ -14,13 +14,13 @@ class TradeTree:
         self.root = None
 
     def put_trade(self, trade: Trade) -> None:
+        if trade.name != self.stock_name:
+            raise ValueError("Invalid stock name")
+
         self.root = self.__insert(trade, self.root)
         self.root.color = TradeNode.BLACK
 
     def __insert(self, trade: Trade, node: TradeNode) -> TradeNode:
-        if trade.name != self.stock_name:
-            raise ValueError("Invalid stock name")
-
         if node is None:
             return TradeNode(trade)
 

@@ -247,7 +247,7 @@ def runTests(stockName):
 
 
 def testing():
-    N = [10, 100, 1000]
+    N = [0, 1, 2, 10, 100, 1000]
     stockName1, stockName2, stockName3 = generateStockNames()
 
     for num in N:

@@ -86,7 +86,7 @@ class TestSets:
         trades = self.trade_gen_many_same_stock(stock, low, high)
 
         for trade in trades:
-            platform.log_transaction(trade)
+            platform.logTransaction(trade)
 
         return platform
 
@@ -95,7 +95,7 @@ class TestSets:
         trades = self.trade_gen_many_same_value(value)
 
         for trade in trades:
-            platform.log_transaction(trade)
+            platform.logTransaction(trade)
 
         return platform
 
@@ -104,6 +104,6 @@ class TestSets:
         trades = self.trade_gen_many(low, high)
 
         for trade in trades:
-            platform.log_transaction(trade)
+            platform.logTransaction(trade)
 
         return platform

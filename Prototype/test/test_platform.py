@@ -17,7 +17,7 @@ class TestStockTradingPlatform(TestCase):
 
         sut = StockTradingPlatform()
         try:
-            sut.log_transaction(["UCL Bank", 1, 1, SAMPLE_DATE])
+            sut.logTransaction(["UCL Bank", 1, 1, SAMPLE_DATE])
             self.assertFalse(True)
         except ValueError as e:
             self.assertEqual(e.args[0], "Bad Name UCL Bank")
@@ -27,7 +27,7 @@ class TestStockTradingPlatform(TestCase):
     def test_log_bad_stock_value(self):
         sut = StockTradingPlatform()
         try:
-            sut.log_transaction(Trade("HSBA", 0, 1, SAMPLE_DATE))
+            sut.logTransaction(Trade("HSBA", 0, 1, SAMPLE_DATE))
         except ValueError as e:
             self.assertEqual("Bad Price 0", e.args[0])
         except:
@@ -36,7 +36,7 @@ class TestStockTradingPlatform(TestCase):
     def test_log_bad_quantity(self):
         sut = StockTradingPlatform()
         try:
-            sut.log_transaction(Trade("HSBA", 100, 0, SAMPLE_DATE))
+            sut.logTransaction(Trade("HSBA", 100, 0, SAMPLE_DATE))
         except ValueError as e:
             self.assertEqual("Bad quantity 0", e.args[0])
         except:
@@ -46,9 +46,9 @@ class TestStockTradingPlatform(TestCase):
         sut = StockTradingPlatform()
         t = Trade("HSBA", 100, 2, SAMPLE_DATE)
 
-        sut.log_transaction(t)
+        sut.logTransaction(t)
 
-        result = sut.sorted_transactions("HSBA")
+        result = sut.sortedTransactions("HSBA")
 
         self.assertEqual(len(result), 1)
         self.assertEqual(result[0], t)
@@ -61,34 +61,34 @@ class TestStockTradingPlatform(TestCase):
         sut = StockTradingPlatform()
 
         for trade in test_trades:
-            sut.log_transaction(trade)
+            sut.logTransaction(trade)
 
-        trade_list = sut.sorted_transactions("HSBA")
+        trade_list = sut.sortedTransactions("HSBA")
 
         # Assert right number of trades were inserted
         self.assertEqual(len(test_trades), len(trade_list))
 
         # Assert trade with correct minimum value was inserted
-        self.assertEqual(sut.min_transactions("HSBA")[0].get_trade_val(), 100)
+        self.assertEqual(sut.minTransactions("HSBA")[0].get_trade_val(), 100)
 
         # Assert trade with correct maximum value was inserted
-        self.assertEqual(sut.max_transactions("HSBA")[0].get_trade_val(), 100000)
+        self.assertEqual(sut.maxTransactions("HSBA")[0].get_trade_val(), 100000)
 
     def test_log_one_of_each(self):
         sut = StockTradingPlatform()
 
         for stock in sut.STOCKS:
-            sut.log_transaction(test_sets.gen_one_trade(stock, 1000, 100000))
+            sut.logTransaction(test_sets.gen_one_trade(stock, 1000, 100000))
 
         for stock in sut.STOCKS:
-            self.assertEqual(len(sut.sorted_transactions(stock)), 1)
+            self.assertEqual(len(sut.sortedTransactions(stock)), 1)
 
     def test_log(self):
         sut = StockTradingPlatform()
 
-        sut.log_transaction(Trade("London Stock Exchange Group",
-                                  1000, 5,
-                                  datetime.strptime("2020-02-25T22:00:15", "%Y-%m-%dT%H:%M:%S")))
+        sut.logTransaction(Trade("London Stock Exchange Group",
+                                 1000, 5,
+                                 datetime.strptime("2020-02-25T22:00:15", "%Y-%m-%dT%H:%M:%S")))
 
         self.assertTrue(True)
 
@@ -97,10 +97,10 @@ class TestStockTradingPlatform(TestCase):
         sut = StockTradingPlatform()
 
         for trade in trades:
-            sut.log_transaction(trade)
+            sut.logTransaction(trade)
 
         for stock in sut.STOCKS:
-            self.assertEqual(sut.min_transactions(stock), sut.max_transactions(stock))
+            self.assertEqual(sut.minTransactions(stock), sut.maxTransactions(stock))
 
     def test_log_some_conflicts(self):
         trades1 = test_sets.trade_gen_many_same_value(550)
@@ -108,11 +108,11 @@ class TestStockTradingPlatform(TestCase):
         sut = StockTradingPlatform()
 
         for trade in trades1 + trades2:
-            sut.log_transaction(trade)
+            sut.logTransaction(trade)
 
         total_len = 0
         for stock in sut.STOCKS:
-            total_len += len(sut.sorted_transactions(stock))
+            total_len += len(sut.sortedTransactions(stock))
 
         self.assertEqual(total_len, len(trades1) + len(trades2))
 

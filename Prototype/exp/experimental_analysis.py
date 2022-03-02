@@ -30,7 +30,7 @@ def generateTransactions(stockName, num):
         pricePerStock = round(random.uniform(50.00, 100.00), 2)
         quantity = random.randint(10, 1000)
         record = [stockName, pricePerStock, quantity, currentTime]
-        stp.log_transaction(record)
+        stp.logTransaction(record)
 
 
 # returns the trade value for a transaction.
@@ -45,67 +45,67 @@ def sort():
 
 # Test 1 for logTransactions: execution time when the transactions logged are in random order.
 def logTransactionsTest1(num):
-    timeTaken = timeit.repeat(stp.log_transaction(TransactionDataGenerator.generateTransactionData(1)), repeat = num,
+    timeTaken = timeit.repeat(stp.logTransaction(TransactionDataGenerator.generateTransactionData(1)), repeat = num,
                               number = 1000)
     return timeTaken
 
 
 # Test for sortedTransactions: time taken for function to return the sorted list of transactions for a stock.
 def sortedTransactionsTest(stockName):
-    timeTaken = timeit.timeit(stp.sorted_transactions(stockName), number = 1000)
+    timeTaken = timeit.timeit(stp.sortedTransactions(stockName), number = 1000)
     return timeTaken
 
 
 # Test for minTransaction: time taken for function to return the minimum transaction for a stock.
 def minTransactionsTest(stockName):
-    timeTaken = timeit.timeit(stp.min_transactions(stockName), number = 1000)
+    timeTaken = timeit.timeit(stp.minTransactions(stockName), number = 1000)
     return timeTaken
 
 
 # Test for maxTransaction: time taken for function to return the maximum transaction for a stock.
 def maxTransactionsTest(stockName):
-    timeTaken = timeit.timeit(stp.max_transactions(stockName), number = 1000)
+    timeTaken = timeit.timeit(stp.maxTransactions(stockName), number = 1000)
     return timeTaken
 
 
 # Test 1 for floorTransactions: execution time when finding the largest trade value below the minimum for a stock.
 def floorTransactionsTest1(stockName):
     num = getMin(stockName)
-    timeTaken = timeit.timeit(stp.floor_transactions(stockName, num), number = 1000)
+    timeTaken = timeit.timeit(stp.floorTransactions(stockName, num), number = 1000)
     return timeTaken
 
 
 # Test 2 for floorTransactions: execution time when finding the largest trade value below the maximum for a stock.
 def floorTransactionsTest2(stockName):
     num = getMax(stockName)
-    timeTaken = timeit.timeit(stp.floor_transactions(stockName, num), number = 1000)
+    timeTaken = timeit.timeit(stp.floorTransactions(stockName, num), number = 1000)
     return timeTaken
 
 
 # Test 3 for floorTransactions: execution time when finding the largest trade value below all transactions for a stock.
 def floorTransactionsTest3(stockName, num):
-    timeTaken = timeit.timeit(stp.floor_transactions(stockName, num), number = 1000)
+    timeTaken = timeit.timeit(stp.floorTransactions(stockName, num), number = 1000)
     return timeTaken
 
 
 # Test 1 for ceilingTransactions: execution time when finding the smallest trade value below the minimum for a stock.
 def ceilingTransactionsTest1(stockName):
     num = getMin(stockName)
-    timeTaken = timeit.timeit(stp.ceiling_transactions(stockName, num), number = 1000)
+    timeTaken = timeit.timeit(stp.ceilingTransactions(stockName, num), number = 1000)
     return timeTaken
 
 
 # Test 2 for ceilingTransactions: execution time when finding the smallest trade value below the maximum for a stock.
 def ceilingTransactionsTest2(stockName):
     num = getMax(stockName)
-    timeTaken = timeit.timeit(stp.ceiling_transactions(stockName, num), number = 1000)
+    timeTaken = timeit.timeit(stp.ceilingTransactions(stockName, num), number = 1000)
     return timeTaken
 
 
 # Test 3 for ceilingTransactions: execution time when finding the smallest trade value below all transactions for a stock.
 def ceilingTransactionsTest3(stockName, transactions):
     num = transactions.pop(0)
-    timeTaken = timeit.timeit(stp.ceiling_transactions(stockName, num), number = 1000)
+    timeTaken = timeit.timeit(stp.ceilingTransactions(stockName, num), number = 1000)
     print(timeTaken)
     ceilingTransactionsTest3(stockName, transactions)
 
@@ -118,7 +118,7 @@ def floorTransactionsTests(stockName):
     floorTransactionsTest1(stockName)
     floorTransactionsTest2(stockName)
 
-    transactions = stp.sorted_transactions(stockName)
+    transactions = stp.sortedTransactions(stockName)
     numOfTransactions = len(transactions)
     transactions.pop(0)
     transactions.pop(numOfTransactions - 1)
@@ -139,7 +139,7 @@ def ceilingTransactionsTests(stockName):
     times.append(ceilingTransactionsTest1(stockName))
     times.append(ceilingTransactionsTest2(stockName))
 
-    transactions = stp.sorted_transactions(stockName)
+    transactions = stp.sortedTransactions(stockName)
     numOfTransactions = len(transactions)
     transactions.pop(0)
     transactions.pop(numOfTransactions - 1)
@@ -155,7 +155,7 @@ def ceilingTransactionsTests(stockName):
 def rangeTransactionsTest1(stockName):
     fromValue = getMin(stockName)
     toValue = getMax(stockName)
-    timeTaken = timeit.timeit(stp.range_transactions(stockName, fromValue, toValue), number = 1000)
+    timeTaken = timeit.timeit(stp.rangeTransactions(stockName, fromValue, toValue), number = 1000)
     return timeTaken
 
 
@@ -169,7 +169,7 @@ def rangeTransactionsTest2(stockName, transactions):
     numOfTransactions = len(transactions)
     for i in range(1, numOfTransactions - 2):
         toValue = transactions[i]
-        times.append(timeit.timeit(stp.range_transactions(stockName, fromValue, toValue), number = 1000))
+        times.append(timeit.timeit(stp.rangeTransactions(stockName, fromValue, toValue), number = 1000))
 
     return times
 
@@ -184,7 +184,7 @@ def rangeTransactionsTest3(stockName, transactions):
     numOfTransactions = len(transactions)
     for i in range(numOfTransactions - 2, 1):
         fromValue = transactions[i]
-        times.append(timeit.timeit(stp.range_transactions(stockName, fromValue, toValue), number = 1000))
+        times.append(timeit.timeit(stp.rangeTransactions(stockName, fromValue, toValue), number = 1000))
 
     # returns a list
     return times
@@ -194,7 +194,7 @@ def rangeTransactionsTest3(stockName, transactions):
 def rangeTransactionsTests(stockName):
     times = []
 
-    transactions = stp.sorted_transactions(stockName)
+    transactions = stp.sortedTransactions(stockName)
     times.append(rangeTransactionsTest1(stockName))
     times.append(rangeTransactionsTest2(stockName, transactions))
     times.append(rangeTransactionsTest3(stockName, transactions))
@@ -204,7 +204,7 @@ def rangeTransactionsTests(stockName):
 
 # return the minimum transaction for stock.
 def getMin(stockName):
-    min = stp.min_transactions(stockName)
+    min = stp.minTransactions(stockName)
     if len(min) > 1:
         return min[0]
     else:
@@ -213,7 +213,7 @@ def getMin(stockName):
 
 # return the maximum transaction for a stock.
 def getMax(stockName):
-    max = stp.max_transactions(stockName)
+    max = stp.maxTransactions(stockName)
     if len(max) > 1:
         return max[0]
     else:

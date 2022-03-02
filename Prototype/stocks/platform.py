@@ -15,55 +15,62 @@ class StockTradingPlatform:
         for stock in self.STOCKS:
             self.__trade_trees[stock] = TradeTree(stock)
 
-    def log_transaction(self, transaction_record: list):
-        trade = Trade(*transaction_record)
+    # noinspection PyPep8Naming
+    def logTransaction(self, transactionRecord: list) -> None:
+        trade = Trade(*transactionRecord)
         self.__validate_trade(trade)
         self.__trade_trees[trade.name].put_trade(trade)
 
-    def sorted_transactions(self, stock_name: str) -> t.List[Trade]:
-        if stock_name not in self.STOCKS:
+    # noinspection PyPep8Naming
+    def sortedTransactions(self, stockName: str) -> t.List[Trade]:
+        if stockName not in self.STOCKS:
             raise ValueError("That stock was not found")
 
-        return self.__trade_trees[stock_name].get_all_trades()
+        return self.__trade_trees[stockName].get_all_trades()
 
-    def min_transactions(self, stock_name: str) -> t.List[Trade]:
-        if stock_name not in self.STOCKS:
+    # noinspection PyPep8Naming
+    def minTransactions(self, stockName: str) -> t.List[Trade]:
+        if stockName not in self.STOCKS:
             raise ValueError("MAX: That stock was not found")
 
-        return self.__trade_trees[stock_name].get_min_trades()
+        return self.__trade_trees[stockName].get_min_trades()
 
-    def max_transactions(self, stock_name: str) -> t.List[Trade]:
-        if stock_name not in self.STOCKS:
+    # noinspection PyPep8Naming
+    def maxTransactions(self, stockName: str) -> t.List[Trade]:
+        if stockName not in self.STOCKS:
             raise ValueError("MAX: That stock was not found")
 
-        return self.__trade_trees[stock_name].get_max_trades()
+        return self.__trade_trees[stockName].get_max_trades()
 
-    def floor_transactions(self, stock_name: str, threshold_value: float) -> t.List[Trade]:
-        if stock_name not in self.STOCKS:
+    # noinspection PyPep8Naming
+    def floorTransactions(self, stockName: str, thresholdValue: float) -> t.List[Trade]:
+        if stockName not in self.STOCKS:
             raise ValueError("FLOOR: That stock was not found")
 
-        if threshold_value < 0:
+        if thresholdValue < 0:
             raise ValueError("FLOOR: Cannot have negative transactions")
 
-        return self.__trade_trees[stock_name].get_floor_trades(threshold_value)
+        return self.__trade_trees[stockName].get_floor_trades(thresholdValue)
 
-    def ceiling_transactions(self, stock_name: str, threshold_value: float) -> t.List[Trade]:
-        if stock_name not in self.STOCKS:
+    # noinspection PyPep8Naming
+    def ceilingTransactions(self, stockName: str, thresholdValue: float) -> t.List[Trade]:
+        if stockName not in self.STOCKS:
             raise ValueError("CEILING: That stock was not found")
 
-        if threshold_value < 0:
+        if thresholdValue < 0:
             raise ValueError("CEILING: Cannot have a negative trade value")
 
-        return self.__trade_trees[stock_name].get_ceil_trades(threshold_value)
+        return self.__trade_trees[stockName].get_ceil_trades(thresholdValue)
 
-    def range_transactions(self, stock_name: str, from_value: float, to_value: float) -> t.List[Trade]:
-        if stock_name not in self.STOCKS:
+    # noinspection PyPep8Naming
+    def rangeTransactions(self, stockName: str, fromValue: float, toValue: float) -> t.List[Trade]:
+        if stockName not in self.STOCKS:
             raise ValueError("RANGE: That stock was not found")
 
-        if from_value > to_value or from_value < 0 or to_value < 0:
+        if fromValue > toValue or fromValue < 0 or toValue < 0:
             raise ValueError("RANGE: Bad range bounds")
 
-        return self.__trade_trees[stock_name].get_trades_in_range(from_value, to_value)
+        return self.__trade_trees[stockName].get_trades_in_range(fromValue, toValue)
 
     def __validate_trade(self, trade: Trade) -> None:
         if trade.name not in self.STOCKS:

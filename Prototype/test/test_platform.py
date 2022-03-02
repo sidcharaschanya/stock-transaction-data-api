@@ -1,7 +1,7 @@
 from unittest import TestCase
 from src.stocks.platform import StockTradingPlatform
 from datetime import datetime
-from gen_test_sets import TestSets, TradeList
+from gen_test_sets import TestSets
 from src.stocks.trade import Trade
 
 test_sets = TestSets()

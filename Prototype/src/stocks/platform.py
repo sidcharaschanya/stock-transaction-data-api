@@ -1,5 +1,5 @@
-from trade import Trade
-from trade_tree import TradeTree
+from src.stocks.trade import Trade
+from src.stocks.trade_tree import TradeTree
 import typing as t
 
 

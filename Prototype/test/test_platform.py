@@ -1,7 +1,7 @@
 from unittest import TestCase
 from stocks.platform import StockTradingPlatform
 from datetime import datetime
-from gen_test_sets import TestSets, TradeList
+from gen_test_sets import TestSets
 from stocks.trade import Trade
 
 test_sets = TestSets()
@@ -83,8 +83,8 @@ class TestStockTradingPlatform(TestCase):
         sut = StockTradingPlatform()
 
         sut.logTransaction(["London Stock Exchange Group",
-                             1000, 5,
-                             datetime.strptime("2020-02-25T22:00:15", "%Y-%m-%dT%H:%M:%S")])
+                            1000, 5,
+                            datetime.strptime("2020-02-25T22:00:15", "%Y-%m-%dT%H:%M:%S")])
 
         self.assertTrue(True)
 
@@ -126,7 +126,7 @@ class TestStockTradingPlatform(TestCase):
 
     def test_sorted_many(self):
         sut, trades = test_sets.platform_gen_many_same_stock("HSBA")
-        trades.sort(key=lambda x:x[1] * x[2])
+        trades.sort(key=lambda x: x[1] * x[2])
 
         sorted_trades = sut.sortedTransactions("HSBA")
 
@@ -174,6 +174,17 @@ class TestStockTradingPlatform(TestCase):
         self.assertEqual(len(min_set), 1)
         self.assertTrue(self.__trades_equal(min_set[0], Trade(*t)))
 
+    def test_min_bad_name(self):
+        sut = StockTradingPlatform()
+
+        try:
+            sut.minTransactions("UCL Bank")
+            self.assertFalse(True)
+        except ValueError as e:
+            self.assertEqual(e.args[0], "minTransactions: Invalid Stock Name: UCL Bank")
+        except:
+            self.assertFalse(True)
+
     def test_max_transactions_none(self):
         sut = StockTradingPlatform()
 
@@ -206,50 +217,147 @@ class TestStockTradingPlatform(TestCase):
         self.assertEqual(len(max_set), 1)
         self.assertTrue(self.__trades_equal(max_set[0], Trade(*t)))
 
+    def test_max_bad_name(self):
+        sut = StockTradingPlatform()
+
+        try:
+            sut.maxTransactions("UCL Bank")
+            self.assertFalse(True)
+        except ValueError as e:
+            self.assertEqual(e.args[0], "maxTransactions: Invalid Stock Name: UCL Bank")
+        except:
+            self.assertFalse(True)
+
     def test_floor_transactions_empty(self):
-        pass
+        sut = StockTradingPlatform()#
+
+        floor = sut.floorTransactions("HSBA", 100)
+
+        self.assertEqual(floor, [])
 
     def test_floor_below_min(self):
-        pass
+        sut, _ = test_sets.platform_gen_many_same_stock("HSBA", low=100)
+
+        floor = sut.floorTransactions("HSBA", 99)
+
+        self.assertEqual([], floor)
 
     def test_floor_above_max(self):
-        pass
+        sut, _ = test_sets.platform_gen_many_same_stock("HSBA", high=100000)
+
+        floor = sut.floorTransactions("HSBA", 100001)
+
+        self.assertEqual(floor[0].get_trade_val(), 100000)
 
     def test_floor_equal_min(self):
-        pass
+        sut, _ = test_sets.platform_gen_many_same_stock("HSBA", low=100)
 
-    def test_floor_halfway(self):
-        pass
+        floor = sut.floorTransactions("HSBA", 100)
+
+        self.assertEqual(100, floor[0].get_trade_val())
+
+    def test_floor_bad_name(self):
+        sut = StockTradingPlatform()
+
+        try:
+            sut.floorTransactions("UCL Bank", 200)
+            self.assertFalse(True)
+        except ValueError as e:
+            self.assertEqual(e.args[0], "floorTransactions: Invalid Stock Name: UCL Bank")
+        except:
+            self.assertFalse(True)
 
     def test_ceiling_transactions_empty(self):
-        pass
+        sut = StockTradingPlatform()  #
+
+        ceiling = sut.ceilingTransactions("HSBA", 100)
+
+        self.assertEqual(ceiling, [])
 
     def test_ceiling_above_max(self):
-        pass
+        sut, _ = test_sets.platform_gen_many_same_stock("HSBA", high=100000)
+
+        ceiling = sut.floorTransactions("HSBA", 100001)
+
+        self.assertEqual([], ceiling)
 
     def test_ceiling_below_min(self):
-        pass
+        sut, _ = test_sets.platform_gen_many_same_stock("HSBA", low=100)
+
+        ceiling = sut.ceilingTransactions("HSBA", 99)
+
+        self.assertEqual(ceiling[0].get_trade_val(), 100)
 
     def test_ceiling_equal_max(self):
-        pass
+        sut, _ = test_sets.platform_gen_many_same_stock("HSBA", high=100000)
 
-    def test_ceiling_halfway(self):
-        pass
+        ceiling = sut.floorTransactions("HSBA", 100000)
+
+        self.assertEqual(100000, ceiling[0].get_trade_val())
+
+    def test_ceiling_bad_name(self):
+        sut = StockTradingPlatform()
+
+        try:
+            sut.ceilingTransactions("UCL Bank", 200)
+            self.assertFalse(True)
+        except ValueError as e:
+            self.assertEqual(e.args[0], "ceilingTransactions: Invalid Stock Name: UCL Bank")
+        except:
+            self.assertFalse(True)
 
     def test_range_bad_range(self):
-        pass
+        sut = StockTradingPlatform()
 
-    def test_range_zero_range_not_equal(self):
-        pass
+        try:
+            sut.rangeTransactions("HSBA", fromValue=101, toValue=99)
+            self.assertFalse(True)
+        except ValueError as e:
+            self.assertEqual(e.args[0], "rangeTransactions: Invalid Range Bounds: fromValue: 101 toValue: 99")
+        except:
+            self.assertFalse(True)
 
-    def test_range_zero_equal_to_stock(self):
-        pass
+    def test_range_inclusive_below(self):
+        sut = StockTradingPlatform()
+        sut.logTransaction(["HSBA", 100, 2, SAMPLE_DATE])
+        sut.logTransaction(["HSBA", 500, 3, SAMPLE_DATE])
+        sut.logTransaction(["HSBA", 1000, 4, SAMPLE_DATE])
 
-    def test_range_below_min(self):
-        pass
+        range_set = sut.rangeTransactions("HSBA", 200, 300)
 
-    def test_range_above_max(self):
-        pass
+        self.assertEqual(1, len(range_set))
+        self.assertTrue(self.__trades_equal(range_set[0], Trade(*["HSBA", 100, 2, SAMPLE_DATE])))
+
+    def test_range_inclusive_above(self):
+        sut = StockTradingPlatform()
+        sut.logTransaction(["HSBA", 100, 2, SAMPLE_DATE])
+        sut.logTransaction(["HSBA", 500, 3, SAMPLE_DATE])
+        sut.logTransaction(["HSBA", 1000, 4, SAMPLE_DATE])
+
+        range_set = sut.rangeTransactions("HSBA", 2000, 4000)
+
+        self.assertEqual(1, len(range_set))
+        self.assertTrue(self.__trades_equal(range_set[0], Trade(*["HSBA", 1000, 4, SAMPLE_DATE])))
+
+    def test_range_equal_to_stock(self):
+        sut = StockTradingPlatform()
+        sut.logTransaction(["HSBA", 100, 2, SAMPLE_DATE])
+        sut.logTransaction(["HSBA", 500, 3, SAMPLE_DATE])
+        sut.logTransaction(["HSBA", 1000, 4, SAMPLE_DATE])
+
+        range_set = sut.rangeTransactions("HSBA", 1500, 1500)
+
+        self.assertEqual(1, len(range_set))
+        self.assertTrue(self.__trades_equal(range_set[0], Trade(*["HSBA", 500, 3, SAMPLE_DATE])))
 
     def test_range_bad_name(self):
-        pass
+        sut = StockTradingPlatform()
+
+        try:
+            sut.rangeTransactions("UCL Bank", 200, 500)
+            self.assertFalse(True)
+        except ValueError as e:
+            self.assertEqual(e.args[0], "rangeTransactions: Invalid Stock Name: UCL Bank")
+        except:
+            self.assertFalse(True)
+

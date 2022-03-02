@@ -79,24 +79,25 @@ class TradeTree:
 
     def get_floor_trades(self, low: float) -> t.List[Trade]:
         node = self.root
-        return_trades = None
+        floor_trades = None
 
         while node:
             if low < node.trade_val:
-                return_trades = node.trades
+                floor_trades = node.trades
                 node = node.left
             elif node.trade_val == low:
                 return node.trades
             else:
                 node = node.right
 
-        if return_trades:
-            return return_trades
+        if floor_trades:
+            return floor_trades
+
         return []
 
     def get_ceil_trades(self, high: float) -> t.List[Trade]:
         node = self.root
-        return_node = None
+        ceil_trades = None
 
         while node:
             if high < node.trade_val:
@@ -104,11 +105,12 @@ class TradeTree:
             elif node.trade_val == high:
                 return node.trades
             else:
-                return_node = node
+                ceil_trades = node
                 node = node.right
 
-        if return_node:
-            return return_node.trades
+        if ceil_trades:
+            return ceil_trades.trades
+
         return []
 
     def get_trades_in_range(self, low: float, high: float, node: TradeNode = None) -> t.List[Trade]:
@@ -175,27 +177,3 @@ class TradeTree:
             TradeTree.__flip_colors(node)
 
         return node
-
-
-if __name__ == '__main__':
-    # TODO: chuck this for final rev.
-    st = d.datetime.strptime('1/1/2022 1:00:00', '%d/%m/%Y %H:%M:%S')
-    t1 = Trade("test_stock", 79.9, 10, st + d.timedelta(seconds = 3))
-    t2 = Trade("test_stock", 89.9, 10, st + d.timedelta(seconds = 6))
-    t3 = Trade("test_stock", 99.9, 10, st + d.timedelta(seconds = 9))
-    t4 = Trade("test_stock", 99.9, 10, st + d.timedelta(seconds = 12))
-
-    tree = TradeTree("test_stock")
-    tree.put_trade(t1)
-    tree.put_trade(t2)
-    tree.put_trade(t3)
-    tree.put_trade(t4)
-
-    print(tree.root.left.to_dict())
-    print(tree.root.to_dict())
-    print(tree.root.right.to_dict())
-    print([trade.get_trade_val() for trade in tree.get_all_trades()])
-    print(tree.get_all_trades())
-    print(tree.get_min_trades())
-    print(tree.get_max_trades())
-    print(tree.get_trades_in_range(800, 999))

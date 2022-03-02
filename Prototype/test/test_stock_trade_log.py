@@ -1,7 +1,7 @@
 from sys import maxsize
 from unittest import TestCase
-from stocks.trade_tree import TradeTree
-from stocks.trade import Trade
+from src.stocks.trade_tree import TradeTree
+from src.stocks.trade import Trade
 from random import Random
 
 LOW_TRADE = Trade("Barclays", 5, 3, "2021-01-01T13:47:00.00")

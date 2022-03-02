@@ -1,8 +1,8 @@
 from unittest import TestCase
-from stocks.platform import StockTradingPlatform
+from src.stocks.platform import StockTradingPlatform
 from datetime import datetime
 from gen_test_sets import TestSets, TradeList
-from stocks.trade import Trade
+from src.stocks.trade import Trade
 
 test_sets = TestSets()
 SAMPLE_DATE = datetime.strptime('1/1/2022 1:00:00', '%d/%m/%Y %H:%M:%S')
@@ -57,7 +57,7 @@ class TestStockTradingPlatform(TestCase):
     def test_log_many_of_one(self):
         # This generates 100 trades for HSBA with a min value of 100 and a max value of 100000
         # It is guaranteed that at least one trade exists with a value of 100 and one exists with a value of 100000
-        sut, test_trades = test_sets.platform_gen_many_same_stock(stock="HSBA", low=100, high=100000)
+        sut, test_trades = test_sets.platform_gen_many_same_stock(stock = "HSBA", low = 100, high = 100000)
 
         trade_list = sut.sortedTransactions("HSBA")
 
@@ -83,8 +83,8 @@ class TestStockTradingPlatform(TestCase):
         sut = StockTradingPlatform()
 
         sut.logTransaction(["London Stock Exchange Group",
-                             1000, 5,
-                             datetime.strptime("2020-02-25T22:00:15", "%Y-%m-%dT%H:%M:%S")])
+                            1000, 5,
+                            datetime.strptime("2020-02-25T22:00:15", "%Y-%m-%dT%H:%M:%S")])
 
         self.assertTrue(True)
 
@@ -96,7 +96,7 @@ class TestStockTradingPlatform(TestCase):
 
     def test_log_some_conflicts(self):
         trades1 = test_sets.trade_gen_many_same_value(550)
-        trades2 = test_sets.trade_gen_many(min_val=1000, max_val=100000)
+        trades2 = test_sets.trade_gen_many(min_val = 1000, max_val = 100000)
         sut = StockTradingPlatform()
 
         for trade in trades1 + trades2:
@@ -126,7 +126,7 @@ class TestStockTradingPlatform(TestCase):
 
     def test_sorted_many(self):
         sut, trades = test_sets.platform_gen_many_same_stock("HSBA")
-        trades.sort(key=lambda x:x[1] * x[2])
+        trades.sort(key = lambda x: x[1] * x[2])
 
         sorted_trades = sut.sortedTransactions("HSBA")
 
@@ -158,7 +158,7 @@ class TestStockTradingPlatform(TestCase):
             self.assertEqual(trade.get_trade_val(), 5000)
 
     def test_min_transactions(self):
-        sut, _ = test_sets.platform_gen_many_same_stock(low=100, high=100000, stock="HSBA")
+        sut, _ = test_sets.platform_gen_many_same_stock(low = 100, high = 100000, stock = "HSBA")
 
         min_set = sut.minTransactions("HSBA")
 
@@ -190,7 +190,7 @@ class TestStockTradingPlatform(TestCase):
             self.assertEqual(trade.get_trade_val(), 5000)
 
     def test_max_transactions(self):
-        sut, _ = test_sets.platform_gen_many_same_stock(low=100, high=100000, stock="HSBA")
+        sut, _ = test_sets.platform_gen_many_same_stock(low = 100, high = 100000, stock = "HSBA")
 
         max_set = sut.maxTransactions("HSBA")
 

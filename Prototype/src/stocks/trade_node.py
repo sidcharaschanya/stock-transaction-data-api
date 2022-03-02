@@ -1,4 +1,4 @@
-from stocks.trade import Trade
+from trade import Trade
 import typing as t
 
 

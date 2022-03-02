@@ -1,5 +1,5 @@
-from stocks.trade import Trade
-from stocks.trade_node import TradeNode
+from trade import Trade
+from trade_node import TradeNode
 import typing as t
 
 

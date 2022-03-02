@@ -78,39 +78,33 @@ class TradeTree:
 
     def get_floor_trades(self, low: float) -> t.List[Trade]:
         node = self.root
-        floor_trades = None
+        floor_trades = []
 
         while node:
-            if low < node.trade_val:
+            if node.trade_val == low:
+                return node.trades
+            elif node.trade_val > low:
                 floor_trades = node.trades
                 node = node.left
-            elif node.trade_val == low:
-                return node.trades
-            else:
+            elif node.trade_val < low:
                 node = node.right
 
-        if floor_trades:
-            return floor_trades
-
-        return []
+        return floor_trades
 
     def get_ceil_trades(self, high: float) -> t.List[Trade]:
         node = self.root
-        ceil_trades = None
+        ceil_trades = []
 
         while node:
-            if high < node.trade_val:
-                node = node.left
-            elif node.trade_val == high:
+            if node.trade_val == high:
                 return node.trades
-            else:
-                ceil_trades = node
+            elif node.trade_val < high:
+                ceil_trades = node.trades
                 node = node.right
+            elif node.trade_val > high:
+                node = node.left
 
-        if ceil_trades:
-            return ceil_trades.trades
-
-        return []
+        return ceil_trades
 
     def get_trades_in_range(self, low: float, high: float, node: TradeNode = None) -> t.List[Trade]:
         if self.root is None:

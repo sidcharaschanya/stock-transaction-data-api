@@ -1,1 +1,0 @@
-from stocks.platform import StockTradingPlatform

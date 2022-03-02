@@ -277,7 +277,7 @@ class TestStockTradingPlatform(TestCase):
     def test_ceiling_above_max(self):
         sut, _ = test_sets.platform_gen_many_same_stock("HSBA", high=100000)
 
-        ceiling = sut.floorTransactions("HSBA", 100001)
+        ceiling = sut.ceilingTransactions("HSBA", 100001)
 
         self.assertEqual([], ceiling)
 

@@ -50,7 +50,7 @@ class StockTradingPlatform:
 
     def ceilingTransactions(self, stockName: str, thresholdValue: float) -> t.List[Trade]:
         if stockName not in self.STOCKS:
-            raise ValueError("ceilingTransactions: Invalid Stock Name")
+            raise ValueError("ceilingTransactions: Invalid Stock Name: " + stockName)
 
         if thresholdValue < 0:
             raise ValueError("ceilingTransactions: Invalid Transaction Value: " + str(thresholdValue))

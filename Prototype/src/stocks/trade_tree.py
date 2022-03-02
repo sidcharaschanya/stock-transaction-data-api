@@ -110,6 +110,9 @@ class TradeTree:
         if self.root is None:
             return []
 
+        if low > high or low < 0:
+            raise ValueError("Invalid Range")
+
         if node is None:
             node = self.root
 

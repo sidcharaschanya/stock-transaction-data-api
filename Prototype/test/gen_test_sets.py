@@ -91,7 +91,6 @@ class TestSets:
             -> tuple[StockTradingPlatform, list[TradeList]]:
         platform = StockTradingPlatform()
         trade_list = self.trade_gen_many_same_stock(stock, low, high, n=n)
-        print(trade_list)
 
         for trade in trade_list:
             platform.logTransaction(trade)

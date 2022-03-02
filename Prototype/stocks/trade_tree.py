@@ -1,6 +1,5 @@
 from trade import Trade
 from trade_node import TradeNode
-import datetime as d
 import typing as t
 
 

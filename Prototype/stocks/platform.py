@@ -15,9 +15,9 @@ class StockTradingPlatform:
         for stock in self.STOCKS:
             self.__trade_trees[stock] = TradeTree(stock)
 
-    def log_transaction(self, trade: Trade):
+    def log_transaction(self, transaction_record: list):
+        trade = Trade(*transaction_record)
         self.__validate_trade(trade)
-
         self.__trade_trees[trade.name].put_trade(trade)
 
     def sorted_transactions(self, stock_name: str) -> t.List[Trade]:

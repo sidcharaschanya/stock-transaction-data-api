@@ -1,12 +1,12 @@
-from trade import Trade
-from trade_node import TradeNode
+from stocks.trade import Trade
+from stocks.trade_node import TradeNode
 import typing as t
 
 
 class TradeTree:
     # TradeTree models all information for a single stock
     # i.e. all trades on a given stock will be stored here
-    # This has no model of any other stocks
+    # This has no model of any other src
 
     def __init__(self, stock_name: str) -> None:
         self.stock_name = stock_name
@@ -14,7 +14,7 @@ class TradeTree:
 
     def put_trade(self, trade: Trade) -> None:
         if trade.name != self.stock_name:
-            raise ValueError("Invalid stock name")
+            raise ValueError("Invalid Stock Name")
 
         self.root = self.__insert(trade, self.root)
         self.root.color = TradeNode.BLACK

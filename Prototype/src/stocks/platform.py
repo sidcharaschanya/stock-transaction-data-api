@@ -1,5 +1,5 @@
-from trade import Trade
-from trade_tree import TradeTree
+from stocks.trade import Trade
+from stocks.trade_tree import TradeTree
 import typing as t
 
 
@@ -23,55 +23,56 @@ class StockTradingPlatform:
 
     def sortedTransactions(self, stockName: str) -> t.List[Trade]:
         if stockName not in self.STOCKS:
-            raise ValueError("That stock was not found")
+            raise ValueError("sortedTransactions: Invalid Stock Name: " + stockName)
 
         return self.__trade_trees[stockName].get_all_trades()
 
     def minTransactions(self, stockName: str) -> t.List[Trade]:
         if stockName not in self.STOCKS:
-            raise ValueError("MAX: That stock was not found")
+            raise ValueError("minTransactions: Invalid Stock Name: " + stockName)
 
         return self.__trade_trees[stockName].get_min_trades()
 
     def maxTransactions(self, stockName: str) -> t.List[Trade]:
         if stockName not in self.STOCKS:
-            raise ValueError("MAX: That stock was not found")
+            raise ValueError("maxTransactions: Invalid Stock Name: " + stockName)
 
         return self.__trade_trees[stockName].get_max_trades()
 
     def floorTransactions(self, stockName: str, thresholdValue: float) -> t.List[Trade]:
         if stockName not in self.STOCKS:
-            raise ValueError("FLOOR: That stock was not found")
+            raise ValueError("floorTransactions: Invalid Stock Name: " + stockName)
 
         if thresholdValue < 0:
-            raise ValueError("FLOOR: Cannot have negative transactions")
+            raise ValueError("floorTransactions: Invalid Transaction Value: " + str(thresholdValue))
 
         return self.__trade_trees[stockName].get_floor_trades(thresholdValue)
 
     def ceilingTransactions(self, stockName: str, thresholdValue: float) -> t.List[Trade]:
         if stockName not in self.STOCKS:
-            raise ValueError("CEILING: That stock was not found")
+            raise ValueError("ceilingTransactions: Invalid Stock Name")
 
         if thresholdValue < 0:
-            raise ValueError("CEILING: Cannot have a negative trade value")
+            raise ValueError("ceilingTransactions: Invalid Transaction Value: " + str(thresholdValue))
 
         return self.__trade_trees[stockName].get_ceil_trades(thresholdValue)
 
     def rangeTransactions(self, stockName: str, fromValue: float, toValue: float) -> t.List[Trade]:
         if stockName not in self.STOCKS:
-            raise ValueError("RANGE: That stock was not found")
+            raise ValueError("rangeTransactions: Invalid Stock Name: " + stockName)
 
         if fromValue > toValue or fromValue < 0 or toValue < 0:
-            raise ValueError("RANGE: Bad range bounds")
+            raise ValueError("rangeTransactions: Invalid Range Bounds: "
+                             "fromValue: " + str(fromValue) + " toValue: " + str(toValue))
 
         return self.__trade_trees[stockName].get_trades_in_range(fromValue, toValue)
 
     def __validate_trade(self, trade: Trade) -> None:
         if trade.name not in self.STOCKS:
-            raise ValueError("Bad name " + trade.name)
+            raise ValueError("Invalid Stock Name: " + trade.name)
 
         if trade.quantity < 1:
-            raise ValueError("Bad quantity " + str(trade.quantity))
+            raise ValueError("Invalid Stock Quantity: " + str(trade.quantity))
 
         if trade.price <= 0.0:
-            raise ValueError("Bad price " + str(trade.price))
+            raise ValueError("Invalid Stock Price: " + str(trade.price))

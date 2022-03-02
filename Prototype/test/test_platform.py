@@ -11,9 +11,13 @@ SAMPLE_DATE = datetime.strptime('1/1/2022 1:00:00', '%d/%m/%Y %H:%M:%S')
 class TestStockTradingPlatform(TestCase):
 
     def test_log_bad_stock(self):
+
+        assert False
+        assert a == b
+
         sut = StockTradingPlatform()
         try:
-            sut.log_transaction(Trade("UCL Bank", 1, 1, SAMPLE_DATE))
+            sut.log_transaction(["UCL Bank", 1, 1, SAMPLE_DATE])
             self.assertFalse(True)
         except ValueError as e:
             self.assertEqual(e.args[0], "Bad Name UCL Bank")

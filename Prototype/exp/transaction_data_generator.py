@@ -3,8 +3,10 @@ from datetime import timedelta
 from datetime import datetime
 
 
+# noinspection PyPep8Naming
 class TransactionDataGenerator:
     def __init__(self):
+        # noinspection SpellCheckingInspection
         self.stockNames = ["Barclays", "HSBA", "Lloyds Banking Group", "NatWest Group",
                            "Standard Chartered", "3i", "Abrdn", "Hargreaves Lansdown",
                            "London Stock Exchange Group", "Pershing Square Holdings",

@@ -1,8 +1,8 @@
 import timeit
 import datetime
 import random
-from transaction_data_generator import TransactionDataGenerator
-from stocks.platform import StockTradingPlatform
+from src.exp.transaction_data_generator import TransactionDataGenerator
+from src.stocks.platform import StockTradingPlatform
 
 stockNames = ["Barclays", "HSBA", "Lloyds", "Banking Group", "Natwest Group", "Standard Chartered", "3i", "Abdrdn",
               "Hargreaves", "Lansdown", "London Stock Exchange Group", "Perching Square Holdings", "Schroders",
@@ -65,6 +65,7 @@ def testingLogTransactions(listTransactions):
 
     return times
 
+
 def logTransactionsTest(listTransactions, system):
     timeTaken = 0
     for n in range(numRuns):
@@ -75,6 +76,7 @@ def logTransactionsTest(listTransactions, system):
             timeTaken += endTime - startTime
     timeTaken = round((timeTaken / numRuns), 4)
     return timeTaken
+
 
 # Test for sortedTransactions: time taken for function to return the sorted list of transactions for a stock.
 def sortedTransactionsTest(stockName):

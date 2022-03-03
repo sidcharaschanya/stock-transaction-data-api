@@ -336,14 +336,14 @@ def outputData(times):
     if type(times) == list:
         n = 1
         for time in times:
-            print("Time taken for test ", n, ": ", time, "")
+            print("Time taken for test ", n, ": ", time)
             n += 1
     else:
-        print("Time taken : ", times)
+        print("Time taken : ", times, "\n")
 
 
 def testing(stockName):
-    print("Tests for ", stockName)
+    print("Tests for ", stockName, "\n")
     print("Data for sortedTransactions tests: \n")
     outputData(sortedTransactionsTest(stockName))
     print("Data for minTransactions tests: \n")

@@ -2,7 +2,7 @@ import timeit
 import datetime
 import random
 from transaction_data_generator import TransactionDataGenerator
-from stocks.platform import StockTradingPlatform
+from src.stocks.platform import StockTradingPlatform
 
 stockNames = ["Barclays", "HSBA", "Lloyds", "Banking Group", "Natwest Group", "Standard Chartered", "3i", "Abdrdn",
               "Hargreaves", "Lansdown", "London Stock Exchange Group", "Perching Square Holdings", "Schroders",

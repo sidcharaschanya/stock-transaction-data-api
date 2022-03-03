@@ -1,13 +1,13 @@
 import timeit
 import datetime
 import random
-from src.exp.transaction_data_generator import TransactionDataGenerator
+from transaction_data_generator import TransactionDataGenerator
 from src.stocks.platform import StockTradingPlatform
 
 stockNames = ["Barclays", "HSBA", "Lloyds Banking Group", "NatWest Group",
-              "Standard Chartered", "3i", "Abrdn", "Hargreaves Lansdown",
-              "London Stock Exchange Group", "Pershing Square Holdings",
-              "Schroders", "St. James's Place plc."]
+                           "Standard Chartered", "3i", "Abrdn", "Hargreaves Lansdown",
+                           "London Stock Exchange Group", "Pershing Square Holdings",
+                           "Schroders", "St. James's Place plc."]
 currentTime = datetime.datetime.now()
 currentTime = currentTime.strftime("%d/%m/%Y %H:%M:%S")
 
@@ -48,7 +48,12 @@ def tradeValue(transaction):
 def sort():
     sortedListTransactions = []
     for stockName in stockNames:
-        sortedListTransactions.append(stp.sortedTransactions(stockName))
+        transactions = stp.sortedTransactions(stockName)
+        print(transactions)
+        if len(transactions) > 0:
+            transactions = transactions[0].to_list()
+            sortedListTransactions.append(transactions)
+
     return sortedListTransactions
 
 
@@ -59,12 +64,13 @@ def testingLogTransactions(num):
     print(listTransactions)
     times.append(logTransactionsTest(listTransactions))
     listTransactions = sort()
+    print(listTransactions)
     times.append(logTransactionsTest(listTransactions))
     listTransactions.reverse()
+    print(listTransactions)
     times.append(logTransactionsTest(listTransactions))
 
     return times
-
 
 def logTransactionsTest(listTransactions):
     timeTaken = 0
@@ -76,8 +82,8 @@ def logTransactionsTest(listTransactions):
             endTime = timeit.default_timer()
             timeTaken += endTime - startTime
     timeTaken = round((timeTaken / numRuns), 4)
-    return timeTaken
 
+    return timeTaken
 
 # Test for sortedTransactions: time taken for function to return the sorted list of transactions for a stock.
 def sortedTransactionsTest(stockName):
@@ -343,7 +349,7 @@ def testing(stockName):
 
 
 def runTests():
-    N = 1
+    N = 5
     stockName1, stockName2, stockName3 = generateStockNames()
 
     print("Data for logTransactions test for N transactions: \n")
@@ -355,6 +361,5 @@ def runTests():
     testing(stockName1)
     testing(stockName2)
     testing(stockName3)
-
 
 runTests()

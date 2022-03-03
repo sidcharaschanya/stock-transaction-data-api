@@ -1,7 +1,7 @@
 import timeit
 import datetime
 import random
-from transaction_data_generator import TransactionDataGenerator
+from src.exp.transaction_data_generator import TransactionDataGenerator
 from src.stocks.platform import StockTradingPlatform
 
 stockNames = ["Barclays", "HSBA", "Lloyds", "Banking Group", "Natwest Group", "Standard Chartered", "3i", "Abdrdn",

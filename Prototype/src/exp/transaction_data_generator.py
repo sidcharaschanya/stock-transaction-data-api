@@ -29,7 +29,7 @@ class TransactionDataGenerator:
     # N : int
     def generateTransactionData(self, N):
         listTransactions = [[]] * N
-        listDates = [self.startDate + timedelta(seconds = 3 * x) for x in range(0, N)]
+        listDates = [self.startDate + timedelta(seconds=3 * x) for x in range(0, N)]
         listDatesFormatted = [x.strftime('%d/%m/%Y %H:%M:%S') for x in listDates]
         for i in range(N):
             stockName = random.choice(self.stockNames)

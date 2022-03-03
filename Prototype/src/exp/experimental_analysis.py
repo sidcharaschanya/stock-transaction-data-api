@@ -12,6 +12,7 @@ currentTime = datetime.datetime.now()
 currentTime = currentTime.strftime("%d/%m/%Y %H:%M:%S")
 
 stp = StockTradingPlatform()
+stp1 = StockTradingPlatform()
 stp2 = StockTradingPlatform()
 stp3 = StockTradingPlatform()
 testData = TransactionDataGenerator()
@@ -62,7 +63,7 @@ def sort():
 def testingLogTransactions(num):
     times = []
     listTransactions = testData.generateTransactionData(num)
-    times.append(logTransactionsTest(listTransactions, stp))
+    times.append(logTransactionsTest(listTransactions, stp1))
     listTransactions = sort()
     times.append(logTransactionsTest(listTransactions, stp2))
     listTransactions.reverse()
@@ -290,7 +291,7 @@ def rangeTransactionsTest3(stockName, listTransactions):
             startTime = timeit.default_timer()
             stp.rangeTransactions(stockName, fromValue, toValue)
             endTime = timeit.default_timer()
-            timeTaken += startTime - endTime
+            timeTaken += endTime - startTime
         timeTaken = round((timeTaken / numRuns), 8)
         times.append(timeTaken)
     return times
@@ -333,10 +334,10 @@ def outputData(times):
     if type(times) == list:
         n = 1
         for time in times:
-            print("Time taken for test ", n, ": ", time, "\n")
+            print("Time taken for test ", n, ": ", time, "")
             n += 1
     else:
-        print("Time taken : ", times, "\n")
+        print("Time taken : ", times)
 
 
 def testing(stockName):

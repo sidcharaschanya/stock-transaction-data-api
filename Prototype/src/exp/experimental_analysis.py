@@ -4,15 +4,14 @@ import random
 from transaction_data_generator import TransactionDataGenerator
 from src.stocks.platform import StockTradingPlatform
 
-stockNames = ["Barclays", "HSBA", "Lloyds", "Banking Group", "Natwest Group", "Standard Chartered", "3i", "Abdrdn",
-              "Hargreaves", "Lansdown", "London Stock Exchange Group", "Perching Square Holdings", "Schroders",
-              "St. James' Place plc."]
+stockNames = ["Barclays", "HSBA", "Lloyds Banking Group", "NatWest Group",
+                           "Standard Chartered", "3i", "Abrdn", "Hargreaves Lansdown",
+                           "London Stock Exchange Group", "Pershing Square Holdings",
+                           "Schroders", "St. James's Place plc."]
 currentTime = datetime.datetime.now()
 currentTime = currentTime.strftime("%d/%m/%Y %H:%M:%S")
 
 stp = StockTradingPlatform()
-stp2 = StockTradingPlatform()
-stp3 = StockTradingPlatform()
 testData = TransactionDataGenerator()
 numRuns = 10
 
@@ -54,23 +53,25 @@ def sort():
 
 
 # Test 1 for logTransactions: execution time when the transactions logged are in random order.
-def testingLogTransactions(listTransactions):
+def testingLogTransactions(num):
     times = []
-
-    times.append(logTransactionsTest(listTransactions, stp))
+    listTransactions = testData.generateTransactionData(num)
+    print(listTransactions)
+    times.append(logTransactionsTest(listTransactions))
     listTransactions = sort()
-    times.append(logTransactionsTest(listTransactions, stp2))
+    times.append(logTransactionsTest(listTransactions))
     listTransactions.reverse()
-    times.append(logTransactionsTest(listTransactions, stp3))
+    times.append(logTransactionsTest(listTransactions))
 
     return times
 
-def logTransactionsTest(listTransactions, system):
+def logTransactionsTest(listTransactions):
     timeTaken = 0
     for n in range(numRuns):
+        stp = StockTradingPlatform()
         for transaction in listTransactions:
             startTime = timeit.default_timer()
-            system.logTransaction(transaction)
+            stp.logTransaction(transaction)
             endTime = timeit.default_timer()
             timeTaken += endTime - startTime
     timeTaken = round((timeTaken / numRuns), 4)
@@ -340,16 +341,18 @@ def testing(stockName):
 
 
 def runTests():
-    N = [0, 1, 2, 10, 100, 1000]
+    N = 1
     stockName1, stockName2, stockName3 = generateStockNames()
 
-    for num in N:
-        print("For N = ", N, "\n")
-        generateTransactions(stockName1, num)
-        generateTransactions(stockName2, num)
-        generateTransactions(stockName3, num)
-        testing(stockName1)
-        testing(stockName2)
-        testing(stockName3)
-        print("Data for logTransactions test for N transactions: \n")
-        outputData(testingLogTransactions(N))
+    print("Data for logTransactions test for N transactions: \n")
+    outputData(testingLogTransactions(N))
+    print("For N = ", N, "\n")
+    generateTransactions(stockName1, N)
+    generateTransactions(stockName2, N)
+    generateTransactions(stockName3, N)
+    testing(stockName1)
+    testing(stockName2)
+    testing(stockName3)
+
+
+runTests()

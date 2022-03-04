@@ -203,7 +203,6 @@ def rangeTransactionsTest(stockName, fromValue, toValue):
 # middle trade values for a stock
 
 
-
 # Test 3 for range Transactions: time taken for rangeTransactions to return all transactions in between middle and
 # maximum trade values for a stock.
 
@@ -256,6 +255,7 @@ def getMax(stockName):
             return max[0]
         else:
             return max
+
 
 def middleTradeValue(stockName):
     sortedListTransactions = []

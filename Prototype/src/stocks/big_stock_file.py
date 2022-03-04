@@ -1,6 +1,44 @@
-from src.stocks.trade import Trade
-from src.stocks.trade_node import TradeNode
+# ===========================INCLUDE ALL BELOW IN JUPYTER NOTEBOOK===========================
+
+import datetime as d
 import typing as t
+
+
+class Trade:
+    def __init__(self, name: str, price: float, quantity: int, time: d.datetime) -> None:
+        self.name = name
+        self.price = price
+        self.quantity = quantity
+        self.time = time
+
+    def get_trade_val(self) -> float:
+        return self.price * self.quantity
+
+    def to_list(self) -> list:
+        # Note: Converting to list makes it easier to work with in some applications and can have performance advantages
+        return [self.name, self.price, self.quantity, self.time]
+
+
+class TradeNode:
+    RED = True
+    BLACK = False
+
+    def __init__(self, trade: Trade) -> None:
+        self.trade_val = trade.get_trade_val()
+
+        # Array of all nodes with same value
+        self.trades = [trade]
+
+        self.left = None
+        self.right = None
+        self.color = TradeNode.RED
+
+    def to_dict(self) -> t.Dict[float, t.List[list]]:
+        # This has a performance advantage over storing the trade as a dictionary; list lookup is much
+        # faster than kv lookup and takes better advantage of locality
+
+        # Maps trade value to trade information in list form
+        return {self.trade_val: [trade.to_list() for trade in self.trades]}
 
 
 class TradeTree:

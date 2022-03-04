@@ -80,7 +80,7 @@ class TradeTree:
         node = self.root
         floor_trades = []
 
-        while node:
+        while node is not None:
             if node.trade_val == high:
                 return node.trades
             elif node.trade_val < high:
@@ -95,7 +95,7 @@ class TradeTree:
         node = self.root
         ceil_trades = []
 
-        while node:
+        while node is not None:
             if node.trade_val == low:
                 return node.trades
             elif node.trade_val > low:

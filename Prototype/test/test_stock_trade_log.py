@@ -1,7 +1,7 @@
 from sys import maxsize
 from unittest import TestCase
-from stocks.trade_tree import TradeTree
-from stocks.trade import Trade
+from src.stocks.trade_tree import TradeTree
+from src.stocks.trade import Trade
 from random import Random
 from datetime import datetime
 

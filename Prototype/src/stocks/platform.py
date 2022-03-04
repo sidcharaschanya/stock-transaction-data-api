@@ -1,5 +1,5 @@
-from stocks.trade import Trade
-from stocks.trade_tree import TradeTree
+from src.stocks.trade import Trade
+from src.stocks.trade_tree import TradeTree
 import typing as t
 
 
@@ -7,9 +7,9 @@ import typing as t
 class StockTradingPlatform:
     def __init__(self) -> None:
         # noinspection SpellCheckingInspection
-        self.STOCKS = {"Barclays", "HSBA", "Lloyds", "Banking Group", "NatWest Group", "Standard Chartered", "3i",
+        self.STOCKS = ["Barclays", "HSBA", "Lloyds Banking Group", "NatWest Group", "Standard Chartered", "3i",
                        "Abrdn", "Hargreaves Lansdown", "London Stock Exchange Group", "Pershing Square Holdings",
-                       "Schroders", "St. James's Place plc."}
+                       "Schroders", "St. James's Place plc."]
 
         self.__trade_trees = {}
 

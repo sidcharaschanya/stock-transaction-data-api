@@ -1,8 +1,8 @@
 from unittest import TestCase
 from stocks.platform import StockTradingPlatform
 from datetime import datetime
-from gen_test_sets import TestSets
-from stocks.trade import Trade
+from test.gen_test_sets import TestSets
+from src.stocks.trade import Trade
 
 test_sets = TestSets()
 SAMPLE_DATE = datetime.strptime('1/1/2022 1:00:00', '%d/%m/%Y %H:%M:%S')
@@ -96,7 +96,7 @@ class TestStockTradingPlatform(TestCase):
 
     def test_log_some_conflicts(self):
         trades1 = test_sets.trade_gen_many_same_value(550)
-        trades2 = test_sets.trade_gen_many(min_val=1000, max_val=100000)
+        trades2 = test_sets.trade_gen_many(min_val = 1000, max_val = 100000)
         sut = StockTradingPlatform()
 
         for trade in trades1 + trades2:

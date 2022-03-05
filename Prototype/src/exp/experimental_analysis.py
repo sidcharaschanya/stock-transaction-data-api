@@ -55,8 +55,12 @@ def generateEqualTransactions(stockName, num):
 
 # returns the trade value for a transaction.
 def tradeValue(transaction):
-    tradeValue = transaction[1] * transaction[2]
-    return tradeValue
+    if transaction == 0:
+        return 0
+    else:
+        transaction = transaction[0]
+        tradeValue = transaction[1] * transaction[2]
+        return tradeValue
 
 
 def sort():
@@ -170,8 +174,8 @@ def ceilingTransactionsTest(stockName, num, system):
 
 # Testing all cases for floorTransactions
 def testingFloorTransactions(stockName, system):
-    minTradeValue = tradeValue(getMin(stockName)[0])
-    maxTradeValue = tradeValue(getMax(stockName)[0])
+    minTradeValue = tradeValue(getMin(stockName))
+    maxTradeValue = tradeValue(getMax(stockName))
     midTradeValue = middleTradeValue(stockName)
 
     times = []
@@ -191,8 +195,8 @@ def testingFloorTransactions(stockName, system):
 
 # Testing all cases for ceilingTransactions
 def testingCeilingTransactions(stockName, system):
-    minTradeValue = tradeValue(getMin(stockName)[0])
-    maxTradeValue = tradeValue(getMax(stockName)[0])
+    minTradeValue = tradeValue(getMin(stockName))
+    maxTradeValue = tradeValue(getMax(stockName))
     midTradeValue = middleTradeValue(stockName)
     times = []
     times3 = []
@@ -226,9 +230,10 @@ def rangeTransactionsTest(stockName, fromValue, toValue, system):
 
 # testing all cases for rangeTransactions.
 def testingRangeTransactions(stockName, system):
-    minTradeValue = tradeValue(getMin(stockName)[0])
+    minTradeValue = tradeValue(getMin(stockName))
     midTradeValue = middleTradeValue(stockName)
-    maxTradeValue = tradeValue(getMax(stockName)[0])
+    maxTradeValue = tradeValue(getMax(stockName))
+
     times = []
 
     # Test 1 for rangeTransactions: time taken for rangeTransactions to return all transactions in between the maximum
@@ -244,6 +249,7 @@ def testingRangeTransactions(stockName, system):
     times.append(rangeTransactionsTest(stockName, midTradeValue, maxTradeValue, system))
 
     return times
+
 
 # Repeat all tests but with a system that has transactions which are all equal.
 def testingEqualTransactions(stockName):
@@ -265,7 +271,7 @@ def getMin(stockName):
     try:
         min = [min[0].to_list()]
     except:
-        min = 0
+        return 0
     else:
         if len(min) > 1:
             return min[0]
@@ -279,26 +285,27 @@ def getMax(stockName):
     try:
         max = [max[0].to_list()]
     except:
-        max = 0
+        return 0
     else:
         if len(max) > 1:
             return max[0]
         else:
             return max
 
+
 def middleTradeValue(stockName):
     sortedListTransactions = []
     transactions = stp.sortedTransactions(stockName)
-    num = len(transactions) - 1
+    num = len(transactions)
     for i in range(0, num):
         sortedListTransactions.append(transactions[i].to_list())
     if len(sortedListTransactions) == 1:
-        return tradeValue(sortedListTransactions[0])
+        return tradeValue(sortedListTransactions)
     elif len(sortedListTransactions) == 0:
         return 0
     else:
         middle = num // 2
-        middleTransaction = sortedListTransactions[middle]
+        middleTransaction = [sortedListTransactions[middle]]
         middleValue = tradeValue(middleTransaction)
         return middleValue
 

@@ -347,5 +347,4 @@ def runTests():
     testing(stockName2)
     testing(stockName3)
 
-
 runTests()

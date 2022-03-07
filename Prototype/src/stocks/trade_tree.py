@@ -3,26 +3,31 @@ from src.stocks.trade_node import TradeNode
 import typing as t
 
 
+# This class models all information for a single stock name.
+# All trades on a given stock will be stored here.
+# This has no model of any other stocks.
+# It implements a balanced search tree ADT using a left-leaning red-black binary search tree.
+# Each node in the tree is a TradeNode object.
 class TradeTree:
-    # TradeTree models all information for a single stock
-    # i.e. all trades on a given stock will be stored here
-    # This has no model of any other src
-
     def __init__(self, stock_name: str) -> None:
         self.stock_name = stock_name
         self.root = None
 
     def put_trade(self, trade: Trade) -> None:
+        # Ensure that the Trade object to be inserted matches the stock name of the current TradeTree object
         if trade.name != self.stock_name:
             raise ValueError("Invalid Stock Name")
 
         self.root = self.__insert(trade, self.root)
+
+        # Maintain invariant of coloring root node black
         self.root.color = TradeNode.BLACK
 
     def __insert(self, trade: Trade, node: TradeNode) -> TradeNode:
         if node is None:
             return TradeNode(trade)
 
+        # Use trade value as the key for inserting TradeNode objects into the TradeTree
         trade_val = trade.get_trade_val()
 
         if trade_val == node.trade_val:
@@ -32,13 +37,15 @@ class TradeTree:
         elif trade_val > node.trade_val:
             node.right = self.__insert(trade, node.right)
 
+        # Recursively balance the TradeTree to maintain logarithmic height
         return TradeTree.__balance(node)
 
     def get_all_trades(self, node: TradeNode = None) -> t.List[Trade]:
+        # Base case where the root of the TradeTree has not been initialized
         if self.root is None:
             return []
 
-        # Optional node parameter used to display some other tree or some subtree
+        # Optional node parameter used to display some subtree
         if node is None:
             node = self.root
 
@@ -107,6 +114,7 @@ class TradeTree:
         return ceil_trades
 
     def get_trades_in_range(self, low: float, high: float, node: TradeNode = None) -> t.List[Trade]:
+        # Ensure that the low and high parameters are valid
         if low > high or low < 0:
             raise ValueError("Invalid Range")
 
@@ -161,6 +169,7 @@ class TradeTree:
     def __is_red(node: TradeNode) -> bool:
         return node.color == TradeNode.RED if node is not None else False
 
+    # This method maintains the structural invariants of a left-leaning red-black binary search tree
     @staticmethod
     def __balance(node: TradeNode) -> TradeNode:
         if TradeTree.__is_red(node.right) and not TradeTree.__is_red(node.left):

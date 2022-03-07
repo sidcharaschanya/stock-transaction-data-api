@@ -3,6 +3,7 @@ import datetime
 import random
 from src.exp.transaction_data_generator import TransactionDataGenerator
 from src.stocks.platform import StockTradingPlatform
+import graphs
 
 stockNames = ["Barclays", "HSBA", "Lloyds Banking Group", "NatWest Group",
               "Standard Chartered", "3i", "Abrdn", "Hargreaves Lansdown",
@@ -345,6 +346,7 @@ def testing(stockName):
         outputData(time)
 
 
+
 def runTests():
     N = [0, 1, 10, 50, 100, 200, 300, 400, 500, 600, 700, 1000]
     stockName1, stockName2, stockName3 = generateStockNames()
@@ -361,6 +363,8 @@ def runTests():
         testing(stockName1)
         testing(stockName2)
         testing(stockName3)
+
+    graphs.plotLogTransactions(N, logTransactionTimes)
 
 
 runTests()

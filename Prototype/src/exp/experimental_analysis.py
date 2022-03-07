@@ -16,8 +16,12 @@ stp1 = StockTradingPlatform()
 stp2 = StockTradingPlatform()
 stp3 = StockTradingPlatform()
 stp4 = StockTradingPlatform()
+
 testData = TransactionDataGenerator()
 numRuns = 10
+
+
+logTransactionTimes = []
 
 
 # generate 3 random stock names from start, middle and end of the list.
@@ -318,6 +322,7 @@ def outputData(times):
             n += 1
     else:
         print("Time taken : ", times, "\n")
+    return times
 
 
 def testing(stockName):
@@ -341,17 +346,21 @@ def testing(stockName):
 
 
 def runTests():
-    N = 1000
+    N = [0, 1, 10, 50, 100, 200, 300, 400, 500, 600, 700, 1000]
     stockName1, stockName2, stockName3 = generateStockNames()
 
-    print("Data for logTransactions test for N transactions: \n")
-    outputData(testingLogTransactions(stockName1, stockName2, stockName3, N))
-    print("For N = ", N, "\n")
-    generateTransactions(stockName1, N)
-    generateTransactions(stockName2, N)
-    generateTransactions(stockName3, N)
-    testing(stockName1)
-    testing(stockName2)
-    testing(stockName3)
+    for num in N:
+        print("Data for logTransactions test for N transactions: \n")
+        times = outputData(testingLogTransactions(stockName1, stockName2, stockName3, num))
+        logTransactionTimes.append(times)
+        print(logTransactionTimes)
+        print("For N = ", num, "\n")
+        generateTransactions(stockName1, num)
+        generateTransactions(stockName2, num)
+        generateTransactions(stockName3, num)
+        testing(stockName1)
+        testing(stockName2)
+        testing(stockName3)
+
 
 runTests()

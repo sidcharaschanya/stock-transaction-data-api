@@ -71,7 +71,7 @@ class StockTradingPlatform:
 
         return self.__trade_trees[stockName].get_trades_in_range(fromValue, toValue)
 
-    # This is a private helper method that ensures the transaction records to be inserted are valid.
+    # This private helper method ensures that the transaction records to be inserted are valid.
     def __validate_trade(self, trade: Trade) -> None:
         if trade.name not in self.STOCKS:
             raise ValueError("Invalid Stock Name: " + trade.name)

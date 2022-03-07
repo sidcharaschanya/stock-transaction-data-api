@@ -42,18 +42,18 @@ class TestSets:
 
         return [stock,
                 value[0], value[1],
-                self.__start_date + timedelta(seconds=self.__time_offset)]
+                self.__start_date + timedelta(seconds = self.__time_offset)]
 
     def trade_gen_many_same_stock(self, stock: str = SAMPLE_STOCK, min_val: int = SAMPLE_MIN_VAL,
                                   max_val: int = SAMPLE_MAX_VAL, n: int = SAMPLE_SIZE) -> list[TradeList]:
         trade_list = []
         self.__time_offset += 1
-        trade_list.append([stock, min_val, 1, self.__start_date + timedelta(seconds=self.__time_offset)])
+        trade_list.append([stock, min_val, 1, self.__start_date + timedelta(seconds = self.__time_offset)])
 
         for _ in range(n - 2):
             trade_list.append(self.gen_one_trade(stock, min_val, max_val))
 
-        trade_list.append([stock, max_val, 1, self.__start_date + timedelta(seconds=self.__time_offset)])
+        trade_list.append([stock, max_val, 1, self.__start_date + timedelta(seconds = self.__time_offset)])
 
         return trade_list
 
@@ -77,7 +77,7 @@ class TestSets:
     def tree_gen_many_same_val(self, value: float, stock: str = SAMPLE_STOCK, n: int = SAMPLE_SIZE) \
             -> tuple[TradeTree, list[TradeList]]:
         tree = TradeTree(stock)
-        trade_list = self.trade_gen_many_same_value(value, n=n)
+        trade_list = self.trade_gen_many_same_value(value, n = n)
 
         for trade in trade_list:
             tree.put_trade(Trade(*trade))
@@ -88,7 +88,7 @@ class TestSets:
                       n: int = SAMPLE_SIZE) -> tuple[TradeTree, list[TradeList]]:
 
         tree = TradeTree(stock)
-        trade_list = self.trade_gen_many_same_stock(stock, min_val, max_val, n=n)
+        trade_list = self.trade_gen_many_same_stock(stock, min_val, max_val, n = n)
 
         for trade in trade_list:
             tree.put_trade(Trade(*trade))
@@ -99,7 +99,7 @@ class TestSets:
                                      n: int = SAMPLE_SIZE) -> tuple[StockTradingPlatform, list[TradeList]]:
 
         platform = StockTradingPlatform()
-        trade_list = self.trade_gen_many_same_stock(stock, low, high, n=n)
+        trade_list = self.trade_gen_many_same_stock(stock, low, high, n = n)
 
         for trade in trade_list:
             platform.logTransaction(trade)
@@ -110,7 +110,7 @@ class TestSets:
             -> tuple[StockTradingPlatform, list[TradeList]]:
 
         platform = StockTradingPlatform()
-        trade_list = self.trade_gen_many_same_value(value, n=n)
+        trade_list = self.trade_gen_many_same_value(value, n = n)
 
         for trade in trade_list:
             platform.logTransaction(trade)
@@ -180,8 +180,8 @@ class TestStockTradingPlatform(TestCase):
 
     def test_log_many_of_one(self):
         # This generates 100 trades for HSBA with a min value equal to SAMPLE_MIN_VAL and a max value of SAMPLE_MAX_VAL
-        sut, test_trades = test_sets.platform_gen_many_same_stock(stock=SAMPLE_STOCK,
-                                                                  low=SAMPLE_MIN_VAL, high=SAMPLE_MAX_VAL)
+        sut, test_trades = test_sets.platform_gen_many_same_stock(stock = SAMPLE_STOCK,
+                                                                  low = SAMPLE_MIN_VAL, high = SAMPLE_MAX_VAL)
 
         trade_list = sut.sortedTransactions(SAMPLE_STOCK)
 
@@ -220,7 +220,7 @@ class TestStockTradingPlatform(TestCase):
 
     def test_log_some_conflicts(self):
         trades1 = test_sets.trade_gen_many_same_value(550)
-        trades2 = test_sets.trade_gen_many(min_val=SAMPLE_MIN_VAL, max_val=SAMPLE_MAX_VAL)
+        trades2 = test_sets.trade_gen_many(min_val = SAMPLE_MIN_VAL, max_val = SAMPLE_MAX_VAL)
         sut = StockTradingPlatform()
 
         for trade in trades1 + trades2:
@@ -240,7 +240,7 @@ class TestStockTradingPlatform(TestCase):
         self.assertEqual(result, [])
 
     def test_sorted_one(self):
-        t = test_sets.gen_one_trade(SAMPLE_STOCK, min_val=SAMPLE_MIN_VAL, max_val=SAMPLE_MIN_VAL)
+        t = test_sets.gen_one_trade(SAMPLE_STOCK, min_val = SAMPLE_MIN_VAL, max_val = SAMPLE_MIN_VAL)
         sut = StockTradingPlatform()
         sut.logTransaction(t)
 
@@ -250,7 +250,7 @@ class TestStockTradingPlatform(TestCase):
 
     def test_sorted_many(self):
         sut, trades = test_sets.platform_gen_many_same_stock(SAMPLE_STOCK)
-        trades.sort(key=lambda x: x[1] * x[2])
+        trades.sort(key = lambda x: x[1] * x[2])
 
         sorted_trades = sut.sortedTransactions(SAMPLE_STOCK)
 
@@ -282,7 +282,8 @@ class TestStockTradingPlatform(TestCase):
             self.assertEqual(trade.get_trade_val(), 5000)
 
     def test_min_transactions(self):
-        sut, _ = test_sets.platform_gen_many_same_stock(low=SAMPLE_MIN_VAL, high=SAMPLE_MAX_VAL, stock=SAMPLE_STOCK)
+        sut, _ = test_sets.platform_gen_many_same_stock(low = SAMPLE_MIN_VAL, high = SAMPLE_MAX_VAL,
+                                                        stock = SAMPLE_STOCK)
 
         min_set = sut.minTransactions(SAMPLE_STOCK)
 
@@ -325,7 +326,8 @@ class TestStockTradingPlatform(TestCase):
             self.assertEqual(trade.get_trade_val(), 5000)
 
     def test_max_transactions(self):
-        sut, _ = test_sets.platform_gen_many_same_stock(low=SAMPLE_MIN_VAL, high=SAMPLE_MAX_VAL, stock=SAMPLE_STOCK)
+        sut, _ = test_sets.platform_gen_many_same_stock(low = SAMPLE_MIN_VAL, high = SAMPLE_MAX_VAL,
+                                                        stock = SAMPLE_STOCK)
 
         max_set = sut.maxTransactions(SAMPLE_STOCK)
 
@@ -360,21 +362,21 @@ class TestStockTradingPlatform(TestCase):
         self.assertEqual(floor, [])
 
     def test_floor_below_min(self):
-        sut, _ = test_sets.platform_gen_many_same_stock(SAMPLE_STOCK, low=SAMPLE_MIN_VAL)
+        sut, _ = test_sets.platform_gen_many_same_stock(SAMPLE_STOCK, low = SAMPLE_MIN_VAL)
 
         floor = sut.floorTransactions(SAMPLE_STOCK, SAMPLE_MIN_VAL - 1)
 
         self.assertEqual([], floor)
 
     def test_floor_above_max(self):
-        sut, _ = test_sets.platform_gen_many_same_stock(SAMPLE_STOCK, high=SAMPLE_MAX_VAL)
+        sut, _ = test_sets.platform_gen_many_same_stock(SAMPLE_STOCK, high = SAMPLE_MAX_VAL)
 
         floor = sut.floorTransactions(SAMPLE_STOCK, SAMPLE_MAX_VAL + 1)
 
         self.assertEqual(floor[0].get_trade_val(), SAMPLE_MAX_VAL)
 
     def test_floor_equal_min(self):
-        sut, _ = test_sets.platform_gen_many_same_stock(SAMPLE_STOCK, low=SAMPLE_MIN_VAL)
+        sut, _ = test_sets.platform_gen_many_same_stock(SAMPLE_STOCK, low = SAMPLE_MIN_VAL)
 
         floor = sut.floorTransactions(SAMPLE_STOCK, SAMPLE_MIN_VAL)
 
@@ -399,21 +401,21 @@ class TestStockTradingPlatform(TestCase):
         self.assertEqual(ceiling, [])
 
     def test_ceiling_above_max(self):
-        sut, _ = test_sets.platform_gen_many_same_stock(SAMPLE_STOCK, high=SAMPLE_MAX_VAL)
+        sut, _ = test_sets.platform_gen_many_same_stock(SAMPLE_STOCK, high = SAMPLE_MAX_VAL)
 
         ceiling = sut.ceilingTransactions(SAMPLE_STOCK, SAMPLE_MAX_VAL + 1)
 
         self.assertEqual([], ceiling)
 
     def test_ceiling_below_min(self):
-        sut, _ = test_sets.platform_gen_many_same_stock(SAMPLE_STOCK, low=SAMPLE_MIN_VAL)
+        sut, _ = test_sets.platform_gen_many_same_stock(SAMPLE_STOCK, low = SAMPLE_MIN_VAL)
 
         ceiling = sut.ceilingTransactions(SAMPLE_STOCK, SAMPLE_MIN_VAL - 1)
 
         self.assertEqual(ceiling[0].get_trade_val(), SAMPLE_MIN_VAL)
 
     def test_ceiling_equal_max(self):
-        sut, _ = test_sets.platform_gen_many_same_stock(SAMPLE_STOCK, high=SAMPLE_MAX_VAL)
+        sut, _ = test_sets.platform_gen_many_same_stock(SAMPLE_STOCK, high = SAMPLE_MAX_VAL)
 
         ceiling = sut.floorTransactions(SAMPLE_STOCK, SAMPLE_MAX_VAL)
 
@@ -434,7 +436,7 @@ class TestStockTradingPlatform(TestCase):
         sut = StockTradingPlatform()
 
         try:
-            sut.rangeTransactions(SAMPLE_STOCK, fromValue=101, toValue=99)
+            sut.rangeTransactions(SAMPLE_STOCK, fromValue = 101, toValue = 99)
             self.assertFalse(True)
         except ValueError as e:
             self.assertEqual(e.args[0], "rangeTransactions: Invalid Range Bounds: fromValue: 101 toValue: 99")
@@ -492,8 +494,8 @@ class TestStockTradeLog(TestCase):
         trade_list_1 = trade_list_1.copy()
         trade_list_2 = trade_list_2.copy()
 
-        trade_list_1.sort(key=lambda x: x.to_list()[1] * x.to_list()[2])
-        trade_list_2.sort(key=lambda x: x.to_list()[1] * x.to_list()[2])
+        trade_list_1.sort(key = lambda x: x.to_list()[1] * x.to_list()[2])
+        trade_list_2.sort(key = lambda x: x.to_list()[1] * x.to_list()[2])
 
         if len(trade_list_1) != len(trade_list_2):
             self.assertTrue(False)
@@ -520,13 +522,13 @@ class TestStockTradeLog(TestCase):
         self.assertEqual(log.get_max_trades(), [t])
 
     def test_add_trade_busy(self):
-        log, _ = test_sets.tree_gen_many(stock=SAMPLE_STOCK)
+        log, _ = test_sets.tree_gen_many(stock = SAMPLE_STOCK)
         t = Trade(SAMPLE_STOCK, 123.4, 3, SAMPLE_DATE)
 
         self._test_trade_add(log, t)
 
     def test_add_lots_trades(self):
-        final_log, trades = test_sets.tree_gen_many(stock=SAMPLE_STOCK)
+        final_log, trades = test_sets.tree_gen_many(stock = SAMPLE_STOCK)
         test_log = TradeTree(SAMPLE_STOCK)
 
         for trade in trades:
@@ -536,7 +538,7 @@ class TestStockTradeLog(TestCase):
 
     def test_bad_stock(self):
         t = Trade("Lloyds", 23.4, 1, SAMPLE_DATE)
-        log, _ = test_sets.tree_gen_many(stock=SAMPLE_STOCK)
+        log, _ = test_sets.tree_gen_many(stock = SAMPLE_STOCK)
 
         # Expect failure as we use a stock not used in constructor
         try:
@@ -548,12 +550,12 @@ class TestStockTradeLog(TestCase):
             self.assertFalse(True)
 
     def test_single_min_trade(self):
-        log, _ = test_sets.tree_gen_many(stock=SAMPLE_STOCK, min_val=SAMPLE_MIN_VAL)
+        log, _ = test_sets.tree_gen_many(stock = SAMPLE_STOCK, min_val = SAMPLE_MIN_VAL)
 
         self.assertEqual(log.get_min_trades()[0].get_trade_val(), SAMPLE_MIN_VAL)
 
     def test_many_min_trade(self):
-        log, _ = test_sets.tree_gen_many(stock=SAMPLE_STOCK, min_val=SAMPLE_MIN_VAL)
+        log, _ = test_sets.tree_gen_many(stock = SAMPLE_STOCK, min_val = SAMPLE_MIN_VAL)
 
         min_trade = Trade(SAMPLE_STOCK, SAMPLE_MIN_VAL, 1, SAMPLE_DATE)
 
@@ -570,7 +572,7 @@ class TestStockTradeLog(TestCase):
         self.assertEqual(log.get_max_trades()[0].get_trade_val(), SAMPLE_MAX_VAL)
 
     def test_many_max_trade(self):
-        log, _ = test_sets.tree_gen_many(stock=SAMPLE_STOCK, max_val=SAMPLE_MAX_VAL)
+        log, _ = test_sets.tree_gen_many(stock = SAMPLE_STOCK, max_val = SAMPLE_MAX_VAL)
 
         max_trade = Trade(SAMPLE_STOCK, SAMPLE_MAX_VAL, 1, SAMPLE_DATE)
 
@@ -580,14 +582,14 @@ class TestStockTradeLog(TestCase):
         self.assertEqual(log.get_max_trades()[0].get_trade_val(), SAMPLE_MAX_VAL)
 
     def test_trade_range_all(self):
-        log, trades = test_sets.tree_gen_many(stock=SAMPLE_STOCK, max_val=SAMPLE_MAX_VAL)
+        log, trades = test_sets.tree_gen_many(stock = SAMPLE_STOCK, max_val = SAMPLE_MAX_VAL)
 
         trades = [Trade(*trade) for trade in trades]
 
         self.__assert_trade_lists_contain_same_elems(log.get_trades_in_range(0, SAMPLE_MAX_VAL), trades)
 
     def test_trade_range_none(self):
-        log, _ = test_sets.tree_gen_many(stock=SAMPLE_STOCK, min_val=SAMPLE_MIN_VAL)
+        log, _ = test_sets.tree_gen_many(stock = SAMPLE_STOCK, min_val = SAMPLE_MIN_VAL)
 
         self.assertEqual(log.get_trades_in_range(0.1, 0.2), [])
 

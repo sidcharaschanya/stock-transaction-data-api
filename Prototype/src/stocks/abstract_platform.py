@@ -4,14 +4,12 @@ from abc import ABC, abstractmethod
 # noinspection PyPep8Naming
 # abstract class to represent a stock trading platform
 class AbstractStockTradingPlatform(ABC):
-
     # constructor
     @abstractmethod
     def __init__(self):
         pass
 
-        # adds transactionRecord to the set of completed transactions
-
+    # adds transactionRecord to the set of completed transactions
     @abstractmethod
     def logTransaction(self, transactionRecord):
         pass
@@ -24,24 +22,21 @@ class AbstractStockTradingPlatform(ABC):
         sortedList = []
         return sortedList
 
-        # returns a list of transactions of a given stockName with minimum trade value
-
+    # returns a list of transactions of a given stockName with minimum trade value
     # stockName : str
     @abstractmethod
     def minTransactions(self, stockName):
         minList = []
         return minList
 
-        # returns a list of transactions of a given stockName with maximum trade value
-
+    # returns a list of transactions of a given stockName with maximum trade value
     # stockName : str
     @abstractmethod
     def maxTransactions(self, stockName):
         maxList = []
         return maxList
 
-        # returns a list of transactions of a given stockName,
-
+    # returns a list of transactions of a given stockName,
     # with the largest trade value below a given thresholdValue.
     # stockName : str
     # thresholdValue : double
@@ -50,8 +45,7 @@ class AbstractStockTradingPlatform(ABC):
         floorList = []
         return floorList
 
-        # returns a list of transactions of a given stockName,
-
+    # returns a list of transactions of a given stockName,
     # with the smallest trade value above a given thresholdValue.
     # stockName : str
     # thresholdValue : double
@@ -60,8 +54,7 @@ class AbstractStockTradingPlatform(ABC):
         ceilingList = []
         return ceilingList
 
-        # returns a list of transactions of a given stockName,
-
+    # returns a list of transactions of a given stockName,
     # whose trade value is within the range [fromValue, toValue].
     # stockName : str
     # fromValue : double

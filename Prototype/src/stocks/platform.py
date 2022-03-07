@@ -1,3 +1,4 @@
+from src.stocks.abstract_platform import AbstractStockTradingPlatform
 from src.stocks.trade import Trade
 from src.stocks.trade_tree import TradeTree
 import typing as t
@@ -7,7 +8,7 @@ import typing as t
 # This class implements a hash table ADT using a Python's built-in dictionary data structure.
 # The keys are the stock names and the values are references to TradeTree objects.
 # Each method in this class does thorough error checking before calling operations on the TradeTree objects.
-class StockTradingPlatform:
+class StockTradingPlatform(AbstractStockTradingPlatform):
     def __init__(self) -> None:
         # noinspection SpellCheckingInspection
         self.STOCKS = ["Barclays", "HSBA", "Lloyds Banking Group", "NatWest Group", "Standard Chartered", "3i",

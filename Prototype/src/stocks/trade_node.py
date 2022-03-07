@@ -11,7 +11,7 @@ class TradeNode:
     def __init__(self, trade: Trade) -> None:
         self.trade_val = trade.get_trade_val()
 
-        # Array of all Trade objects with the same trade value
+        # List of all Trade objects with the same trade value
         self.trades = [trade]
 
         self.left = None

@@ -355,7 +355,6 @@ def runTests():
         print("Data for logTransactions test for N transactions: \n")
         times = outputData(testingLogTransactions(stockName1, stockName2, stockName3, num))
         logTransactionTimes.append(times)
-        print(logTransactionTimes)
         print("For N = ", num, "\n")
         generateTransactions(stockName1, num)
         generateTransactions(stockName2, num)

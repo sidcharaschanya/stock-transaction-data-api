@@ -348,7 +348,10 @@ def testing(stockName):
 
 
 def runTests():
-    N = [0, 1, 10, 50, 100, 200, 300, 400, 500, 600, 700, 1000]
+    N = [0]
+    for i in range(20):
+        N.append(N[i] + 50)
+
     stockName1, stockName2, stockName3 = generateStockNames()
 
     for num in N:

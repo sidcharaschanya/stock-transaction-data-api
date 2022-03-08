@@ -44,9 +44,6 @@ def test_graph():
     plt.show()
 
 
-test_graph()
-
-
 def plotLogTransactions(x, times):
     y1 = []
     y2 = []
@@ -77,14 +74,14 @@ def plotLogTransactions(x, times):
     plt.ylim([0, 1])
     plt.show()
 
-    plt.plot(x, y3, '-', color="red", label="same transactions for stockName1")
-    plt.plot(x, y4, '-', color="blue", label="same transactions for stockName2")
-    plt.plot(x, y5, '-', color="green", label="same transactions for stockName3")
+    plt.plot(x, y4, '-', color="red", label="same transactions for stockName1")
+    plt.plot(x, y5, '-', color="blue", label="same transactions for stockName2")
+    plt.plot(x, y6, '-', color="green", label="same transactions for stockName3")
     plt.title("Average log time against number of equal transactions for 3 different stocks")
     plt.ylabel("Average log time")
     plt.xlabel("Number of insertions")
     plt.legend()
-    plt.ylim([0, 1])
+    plt.ylim([0, 0.01])
     plt.show()
 
 

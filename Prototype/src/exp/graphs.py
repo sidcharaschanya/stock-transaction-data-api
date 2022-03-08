@@ -34,7 +34,7 @@ def test_graph():
     x = np.array([1, 2])
     # plt.xscale("log")
 
-    plt.plot(x, y, '-', color='red')
+    plt.plot(x, y, '-', color = 'red')
 
     plt.ylabel('Average log time')
     plt.xlabel('Number of insertions')
@@ -61,9 +61,9 @@ def plotLogTransactions(x, times):
         y5.append(times[i][3][1])
         y6.append(times[i][3][2])
 
-    plt.plot(x, y1, '-', color="red", label="random order transactions")
-    plt.plot(x, y3, '-', color="blue", label="transactions in decreasing order")
-    plt.plot(x, y2, '-', color="green", label="transactions in increasing order")
+    plt.plot(x, y1, '-', color = "red", label = "random order transactions")
+    plt.plot(x, y3, '-', color = "blue", label = "transactions in decreasing order")
+    plt.plot(x, y2, '-', color = "green", label = "transactions in increasing order")
 
     plt.title("Average log time against number of insertions for logTransactions")
     plt.legend()
@@ -74,14 +74,12 @@ def plotLogTransactions(x, times):
     plt.ylim([0, 1])
     plt.show()
 
-    plt.plot(x, y4, '-', color="red", label="same transactions for stockName1")
-    plt.plot(x, y5, '-', color="blue", label="same transactions for stockName2")
-    plt.plot(x, y6, '-', color="green", label="same transactions for stockName3")
+    plt.plot(x, y4, '-', color = "red", label = "same transactions for stockName1")
+    plt.plot(x, y5, '-', color = "blue", label = "same transactions for stockName2")
+    plt.plot(x, y6, '-', color = "green", label = "same transactions for stockName3")
     plt.title("Average log time against number of equal transactions for 3 different stocks")
     plt.ylabel("Average log time")
     plt.xlabel("Number of insertions")
     plt.legend()
     plt.ylim([0, 0.01])
     plt.show()
-
-

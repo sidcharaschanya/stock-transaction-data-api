@@ -21,7 +21,6 @@ stp4 = StockTradingPlatform()
 testData = TransactionDataGenerator()
 numRuns = 10
 
-
 logTransactionTimes = []
 
 
@@ -344,7 +343,6 @@ def testing(stockName):
     times = (testingEqualTransactions(stockName))
     for time in times:
         outputData(time)
-
 
 
 def runTests():

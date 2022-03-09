@@ -24,6 +24,7 @@ numRuns = 10
 
 logTransactionTimes = []
 floorTransactionTimes = []
+sortedTransactionsTimes = []
 
 
 # generate 3 random stock names from start, middle and end of the list.
@@ -330,7 +331,9 @@ def outputData(times):
 def testing(stockName):
     print("Tests for ", stockName, "\n")
     print("Data for sortedTransactions tests: \n")
-    outputData(sortedTransactionsTest(stockName, stp))
+    time = outputData(sortedTransactionsTest(stockName, stp))
+    sortedTransactionsTimes.append(time)
+    print(sortedTransactionsTimes)
     print("Data for minTransactions tests: \n")
     outputData(minTransactionsTest(stockName, stp))
     print("Data for maxTransactions tests: \n")
@@ -338,7 +341,6 @@ def testing(stockName):
     print("Data for floorTransactions tests: \n")
     times = outputData(testingFloorTransactions(stockName, stp))
     floorTransactionTimes.append(times)
-    print(floorTransactionTimes)
     print("Data for ceilingTransactions tests: \n")
     outputData(testingCeilingTransactions(stockName, stp))
     print("Data for rangeTransactions tests: \n")

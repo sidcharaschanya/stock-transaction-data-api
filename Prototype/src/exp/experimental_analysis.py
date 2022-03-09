@@ -26,12 +26,12 @@ logTransactionTimes = []
 
 # generate 3 random stock names from start, middle and end of the list.
 def generateStockNames():
-    firstFour = stockNames[0:4]
-    middleFour = stockNames[5:8]
-    lastFour = stockNames[9:12]
-    stockName1 = firstFour[random.randint(0, 3)]
-    stockName2 = middleFour[random.randint(0, 3)]
-    stockName3 = lastFour[random.randint(0, 3)]
+    firstFour = stockNames[:4]
+    middleFour = stockNames[4:8]
+    lastFour = stockNames[8:]
+    stockName1 = firstFour[random.randint(0, 4)]
+    stockName2 = middleFour[random.randint(0, 4)]
+    stockName3 = lastFour[random.randint(0, 4)]
     return stockName1, stockName2, stockName3
 
 

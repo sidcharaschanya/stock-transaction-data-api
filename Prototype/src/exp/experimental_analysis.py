@@ -21,17 +21,20 @@ stp4 = StockTradingPlatform()
 testData = TransactionDataGenerator()
 numRuns = 10
 
+
 logTransactionTimes = []
+floorTransactionTimes = []
+sortedTransactionsTimes = []
 
 
 # generate 3 random stock names from start, middle and end of the list.
 def generateStockNames():
-    firstFour = stockNames[:4]
+    firstFour = stockNames[0:4]
     middleFour = stockNames[4:8]
     lastFour = stockNames[8:]
-    stockName1 = firstFour[random.randint(0, 4)]
-    stockName2 = middleFour[random.randint(0, 4)]
-    stockName3 = lastFour[random.randint(0, 4)]
+    stockName1 = firstFour[random.randint(0, 3)]
+    stockName2 = middleFour[random.randint(0, 3)]
+    stockName3 = lastFour[random.randint(0, 3)]
     return stockName1, stockName2, stockName3
 
 
@@ -328,13 +331,16 @@ def outputData(times):
 def testing(stockName):
     print("Tests for ", stockName, "\n")
     print("Data for sortedTransactions tests: \n")
-    outputData(sortedTransactionsTest(stockName, stp))
+    time = outputData(sortedTransactionsTest(stockName, stp))
+    sortedTransactionsTimes.append(time)
+    print(sortedTransactionsTimes)
     print("Data for minTransactions tests: \n")
     outputData(minTransactionsTest(stockName, stp))
     print("Data for maxTransactions tests: \n")
     outputData(maxTransactionsTest(stockName, stp))
     print("Data for floorTransactions tests: \n")
-    outputData(testingFloorTransactions(stockName, stp))
+    times = outputData(testingFloorTransactions(stockName, stp))
+    floorTransactionTimes.append(times)
     print("Data for ceilingTransactions tests: \n")
     outputData(testingCeilingTransactions(stockName, stp))
     print("Data for rangeTransactions tests: \n")
@@ -345,14 +351,17 @@ def testing(stockName):
         outputData(time)
 
 
+
 def runTests():
-    N = [0]
-    for i in range(20):
-        N.append(N[i] + 50)
+    N = [0, 1, 10, 100, 200, 300]
 
     stockName1, stockName2, stockName3 = generateStockNames()
 
-    for num in N:
+    for i in range(len(N)):
+        num = N[i]
+        if i > 0:
+            prev = N[i - 1]
+            num = num - prev
         print("Data for logTransactions test for N transactions: \n")
         times = outputData(testingLogTransactions(stockName1, stockName2, stockName3, num))
         logTransactionTimes.append(times)

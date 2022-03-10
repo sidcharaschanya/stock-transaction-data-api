@@ -3,7 +3,7 @@ import datetime
 import random
 from src.exp.transaction_data_generator import TransactionDataGenerator
 from src.stocks.platform import StockTradingPlatform
-import graphs
+import src.exp.graphs as graphs
 
 stockNames = ["Barclays", "HSBA", "Lloyds Banking Group", "NatWest Group",
               "Standard Chartered", "3i", "Abrdn", "Hargreaves Lansdown",

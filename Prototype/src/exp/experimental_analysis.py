@@ -21,13 +21,11 @@ stp4 = StockTradingPlatform()
 testData = TransactionDataGenerator()
 numRuns = 10
 
-
 logTransactionTimes = []
 floorTransactionTimes = []
 ceilingTransactionTimes = []
 rangeTransactionTimes = []
 sortedTransactionsTimes = []
-
 
 
 # generate 3 random stock names from start, middle and end of the list.
@@ -353,7 +351,6 @@ def testing(stockName):
     times = (testingEqualTransactions(stockName))
     for time in times:
         outputData(time)
-
 
 
 def runTests():

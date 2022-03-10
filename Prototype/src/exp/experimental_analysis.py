@@ -24,7 +24,10 @@ numRuns = 10
 
 logTransactionTimes = []
 floorTransactionTimes = []
+ceilingTransactionTimes = []
+rangeTransactionTimes = []
 sortedTransactionsTimes = []
+
 
 
 # generate 3 random stock names from start, middle and end of the list.
@@ -333,7 +336,6 @@ def testing(stockName):
     print("Data for sortedTransactions tests: \n")
     time = outputData(sortedTransactionsTest(stockName, stp))
     sortedTransactionsTimes.append(time)
-    print(sortedTransactionsTimes)
     print("Data for minTransactions tests: \n")
     outputData(minTransactionsTest(stockName, stp))
     print("Data for maxTransactions tests: \n")
@@ -342,9 +344,11 @@ def testing(stockName):
     times = outputData(testingFloorTransactions(stockName, stp))
     floorTransactionTimes.append(times)
     print("Data for ceilingTransactions tests: \n")
-    outputData(testingCeilingTransactions(stockName, stp))
+    times = outputData(testingCeilingTransactions(stockName, stp))
+    ceilingTransactionTimes.append(times)
     print("Data for rangeTransactions tests: \n")
-    outputData(testingRangeTransactions(stockName, stp))
+    times = outputData(testingRangeTransactions(stockName, stp))
+    rangeTransactionTimes.append(times)
     print("Data for all tests repeated with equal transactions: \n")
     times = (testingEqualTransactions(stockName))
     for time in times:
@@ -353,7 +357,7 @@ def testing(stockName):
 
 
 def runTests():
-    N = [0, 1, 10, 100, 200, 300]
+    N = [100, 200, 300, 400, 500, 600, 1000]
 
     stockName1, stockName2, stockName3 = generateStockNames()
 
@@ -374,6 +378,10 @@ def runTests():
         testing(stockName3)
 
     graphs.plotLogTransactions(N, logTransactionTimes)
+    graphs.plotFloorTransactions(N, floorTransactionTimes, stockName1, stockName2, stockName3)
+    graphs.plotCeilingTransactions(N, ceilingTransactionTimes, stockName1, stockName2, stockName3)
+    graphs.plotRangeTransactions(N, rangeTransactionTimes, stockName1, stockName2, stockName3)
+    graphs.plotSortedTransactions(N, sortedTransactionsTimes, stockName1, stockName2, stockName3)
 
 
 runTests()

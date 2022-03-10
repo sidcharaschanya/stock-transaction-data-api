@@ -84,23 +84,182 @@ def plotLogTransactions(x, times):
     plt.ylim([0, 0.01])
     plt.show()
 
-def plotFloorTransactions(x, times, stockName1, stockName2, stockName3):
-
+def plotSortedTransactions(x, times, stockName1, stockName2, stockName3):
     y1 = []
     y2 = []
     y3 = []
 
     numOfTransactions = len(x)
-    num = numOfTransactions // 3
-    for i in range(x):
-        y1.append(times[i][0])
-        y2.append(times[i][1])
-        y3.append(times[i][2])
+    for i in range(numOfTransactions):
+        index = i * 3
+        y1.append(times[index])
+        y2.append(times[index + 1])
+        y3.append(times[index + 2])
 
+    plt.plot(x, y1, '-', color="red", label=stockName1)
+    plt.plot(x, y3, '-', color="blue", label=stockName2)
+    plt.plot(x, y2, '-', color="green", label=stockName3)
 
-    plt.plot(x, y1, '-', color="red", label="Test 1 for stockName 1")
-    plt.plot(x, y3, '-', color="blue", label="transactions in decreasing order")
-    plt.plot(x, y2, '-', color="green", label="transactions in increasing order")
+    plt.title("Average log time against number of insertions for logTransactions")
+    plt.legend()
+    plt.ylabel('Average log time')
+    plt.xlabel('Number of insertions')
+
+    # setting y-axis range
+    plt.ylim([0, 0.0009])
+    plt.show()
+
+def y_coords(x, times):
+    y1 = []
+    y2 = []
+    y3 = []
+    y4 = []
+    y5 = []
+    y6 = []
+    y7 = []
+    y8 = []
+    y9 = []
+
+    numOfTransactions = len(x)
+    for i in range(numOfTransactions):
+        index = i * 3
+        y1.append(times[index][0])
+        y2.append(times[index][1])
+        y3.append(times[index][2])
+        y4.append(times[index + 1][0])
+        y5.append(times[index + 1][1])
+        y6.append(times[index + 1][2])
+        y7.append(times[index + 2][0])
+        y8.append(times[index + 2][1])
+        y9.append(times[index + 2][2])
+
+    return y1, y2, y3, y4, y5, y6, y7, y8, y9
+
+def plotFloorTransactions(x, times, stockName1, stockName2, stockName3):
+
+    y1, y2, y3, y4, y5, y6, y7, y8, y9 = y_coords(x, times)
+
+    plt.plot(x, y1, '-', color="red", label="returning largest values below minimum")
+    plt.plot(x, y2, '-', color="blue", label="returning largest value below maximum")
+    plt.plot(x, y3, '-', color="green", label="returning largest value below middle value")
+
+    plt.title("Average log time against number of insertions for floorTransactions tests on " + stockName1)
+    plt.legend()
+    plt.ylabel('Average log time')
+    plt.xlabel('Number of insertions')
+
+    # setting y-axis range
+    plt.ylim([0, 0.00001])
+    plt.show()
+
+    plt.plot(x, y4, '-', color="red", label="returning largest values below minimum")
+    plt.plot(x, y5, '-', color="blue", label="returning largest value below maximum")
+    plt.plot(x, y6, '-', color="green", label="returning largest value below middle value")
+
+    plt.title("Average log time against number of insertions for floorTransactions tests on " + stockName2)
+    plt.legend()
+    plt.ylabel('Average log time')
+    plt.xlabel('Number of insertions')
+
+    # setting y-axis range
+    plt.ylim([0, 0.00001])
+    plt.show()
+
+    plt.plot(x, y7, '-', color="red", label="returning largest values below minimum")
+    plt.plot(x, y8, '-', color="blue", label="returning largest value below maximum")
+    plt.plot(x, y9, '-', color="green", label="returning largest value below middle value")
+
+    plt.title("Average log time against number of insertions for floorTransactions tests on " + stockName3)
+    plt.legend()
+    plt.ylabel('Average log time')
+    plt.xlabel('Number of insertions')
+
+    # setting y-axis range
+    plt.ylim([0, 0.00001])
+    plt.show()
 
     pass
 
+def plotCeilingTransactions(x, times, stockName1, stockName2, stockName3):
+    y1, y2, y3, y4, y5, y6, y7, y8, y9 = y_coords(x, times)
+
+    plt.plot(x, y1, '-', color="red", label="returning smallest value below minimum")
+    plt.plot(x, y2, '-', color="blue", label="returning smallest value below maximum")
+    plt.plot(x, y3, '-', color="green", label="returning smallest value below middle value")
+
+    plt.title("Average log time against number of insertions for ceilingTransactions tests on " + stockName1)
+    plt.legend()
+    plt.ylabel('Average log time')
+    plt.xlabel('Number of insertions')
+
+    # setting y-axis range
+    plt.ylim([0, 0.00001])
+    plt.show()
+
+    plt.plot(x, y4, '-', color="red", label="returning smallest values below minimum")
+    plt.plot(x, y5, '-', color="blue", label="returning smallest value below maximum")
+    plt.plot(x, y6, '-', color="green", label="returning smallest value below middle value")
+
+    plt.title("Average log time against number of insertions for ceilingTransactions tests on " + stockName2)
+    plt.legend()
+    plt.ylabel('Average log time')
+    plt.xlabel('Number of insertions')
+
+    # setting y-axis range
+    plt.ylim([0, 0.00001])
+    plt.show()
+
+    plt.plot(x, y7, '-', color="red", label="returning smallest values below minimum")
+    plt.plot(x, y8, '-', color="blue", label="returning smallest value below maximum")
+    plt.plot(x, y9, '-', color="green", label="returning smallest value below middle value")
+
+    plt.title("Average log time against number of insertions for ceilingTransactions tests on " + stockName3)
+    plt.legend()
+    plt.ylabel('Average log time')
+    plt.xlabel('Number of insertions')
+
+    # setting y-axis range
+    plt.ylim([0, 0.00001])
+    plt.show()
+
+def plotRangeTransactions(x, times, stockName1, stockName2, stockName3):
+    y1, y2, y3, y4, y5, y6, y7, y8, y9 = y_coords(x, times)
+
+    plt.plot(x, y1, '-', color="red", label="return values between min and max value")
+    plt.plot(x, y2, '-', color="blue", label="return values between min and middle value")
+    plt.plot(x, y3, '-', color="green", label="return values between middle and max value")
+
+    plt.title("Average log time against number of insertions for rangeTransactions tests on " + stockName1)
+    plt.legend()
+    plt.ylabel('Average log time')
+    plt.xlabel('Number of insertions')
+
+    # setting y-axis range
+    plt.ylim([0, 0.001])
+    plt.show()
+
+    plt.plot(x, y4, '-', color="red", label="return values between min and max value")
+    plt.plot(x, y5, '-', color="blue", label="return values between min and middle value")
+    plt.plot(x, y6, '-', color="green", label="return values between middle and max value")
+
+    plt.title("Average log time against number of insertions for rangeTransactions tests on " + stockName2)
+    plt.legend()
+    plt.ylabel('Average log time')
+    plt.xlabel('Number of insertions')
+
+    # setting y-axis range
+    plt.ylim([0, 0.001])
+    plt.show()
+
+    plt.plot(x, y7, '-', color="red", label="return values between min and max value")
+    plt.plot(x, y8, '-', color="blue", label="return values between min and middle value")
+    plt.plot(x, y9, '-', color="green", label="return values between middle and max value")
+
+    plt.title("Average log time against number of insertions for rangeTransactions tests on " + stockName3)
+    plt.legend()
+    plt.ylabel('Average log time')
+    plt.xlabel('Number of insertions')
+
+    # setting y-axis range
+    plt.ylim([0, 0.001])
+    plt.show()

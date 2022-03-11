@@ -49,14 +49,14 @@ class GraphPlotter:
         plt.show()
 
     def plot_graphs(self):
-        # self.__plot_log_graph()
-        # self.__plot_sorted_graph()
-        # self.__plot_min_graph()
-        # self.__plot_max_graph()
+        self.__plot_log_graph()
+        self.__plot_sorted_graph()
+        self.__plot_min_graph()
+        self.__plot_max_graph()
         self.__plot_floor_graph()
         self.__plot_ceiling_graph()
         self.__plot_range_graph()
 
 
-plotter = GraphPlotter(10000, 50, 5)
+plotter = GraphPlotter(10000, 100, 5)
 plotter.plot_graphs()

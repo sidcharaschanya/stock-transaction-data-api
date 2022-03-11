@@ -8,52 +8,52 @@ class GraphPlotter:
         self.__ef.run_tests()
         self.__x = self.__ef.get_n_transactions_list()
 
-    def __plot_log_graph(self) -> None:
-        plt.plot(self.__x, self.__ef.get_times(Case.LOG_RANDOM), "+")
-        plt.plot(self.__x, self.__ef.get_times(Case.LOG_SORTED), "g*")
-        plt.ylim([0.000004, 0.00002])
-        plt.show()
+    @staticmethod
+    def __get_bounds(y) -> tuple[float, float]:
+        y.sort()
+        return 0.25*y[int(len(y) * 0.02)], y[int(len(y) * 0.97)]*1.2
 
-    def __plot_sorted_graph(self) -> None:
-        plt.plot(self.__x, self.__ef.get_times(Case.SORTED), "+")
-        plt.show()
-
-    def __plot_min_graph(self) -> None:
-        plt.plot(self.__x, self.__ef.get_times(Case.MIN), "+")
-        plt.ylim([0.0000005, 0.00000125])
-        plt.show()
-
-    def __plot_max_graph(self) -> None:
-        plt.plot(self.__x, self.__ef.get_times(Case.MAX), "+")
-        plt.ylim([0.0000005, 0.00000125])
-        plt.show()
-
-    def __plot_floor_graph(self) -> None:
-        plt.plot(self.__x, self.__ef.get_times(Case.FLOOR_RANDOM), "+")
-        plt.plot(self.__x, self.__ef.get_times(Case.FLOOR_EXISTING), "g*")
-        plt.ylim([0.0000007, 0.0000021])
-        plt.show()
-
-    def __plot_ceiling_graph(self) -> None:
-        plt.plot(self.__x, self.__ef.get_times(Case.CEILING_RANDOM), "+")
-        plt.plot(self.__x, self.__ef.get_times(Case.CEILING_EXISTING), "g*")
-        plt.ylim([0.0000007, 0.0000021])
-        plt.show()
-
-    def __plot_range_graph(self) -> None:
-        plt.plot(self.__x, self.__ef.get_times(Case.RANGE_RANDOM), "+")
-        plt.plot(self.__x, self.__ef.get_times(Case.RANGE_ALL), "g*")
+    def __general_plot(self, title, y, y2=None, y1_label=None, y2_label=None):
+        if y1_label and y2_label:
+            plt.plot(self.__x, y, '+', label=y1_label)
+            if y2:
+                plt.plot(self.__x, y2, '*', label=y2_label)
+            plt.legend()
+        else:
+            plt.plot(self.__x, y, '+')
+            if y2:
+                plt.plot(self.__x, y2, 'g*')
+        plt.xlabel("Input Size")
+        plt.ylabel("Time of execution")
+        plt.title(title)
+        plt.ylim(list(self.__get_bounds(y)))
         plt.show()
 
     def plot_graphs(self):
-        self.__plot_log_graph()
-        self.__plot_sorted_graph()
-        self.__plot_min_graph()
-        self.__plot_max_graph()
-        self.__plot_floor_graph()
-        self.__plot_ceiling_graph()
-        self.__plot_range_graph()
+        self.__general_plot('Log Transactions',
+                            self.__ef.get_times(Case.LOG_SORTED),
+                            self.__ef.get_times(Case.LOG_RANDOM),
+                            'Sorted', 'Random')
+        self.__general_plot('Sorted List Retrieval',
+                            self.__ef.get_times(Case.SORTED))
+        self.__general_plot('Min Transactions',
+                            self.__ef.get_times(Case.MIN))
+        self.__general_plot('Max Transactions',
+                            self.__ef.get_times(Case.MAX))
+        self.__general_plot('Retrieve Floor',
+                            self.__ef.get_times(Case.FLOOR_RANDOM),
+                            self.__ef.get_times(Case.FLOOR_EXISTING),
+                            'Random', 'Existing')
+        self.__general_plot('Retrieve Ceiling',
+                            self.__ef.get_times(Case.CEILING_RANDOM),
+                            self.__ef.get_times(Case.CEILING_EXISTING),
+                            'Random', 'Existing')
+        self.__general_plot('Retrieve Range',
+                            self.__ef.get_times(Case.RANGE_ALL),
+                            self.__ef.get_times(Case.RANGE_RANDOM),
+                            'Full range', 'Random Range')
 
 
-plotter = GraphPlotter(10000, 100, 5)
-plotter.plot_graphs()
+if __name__ == '__main__':
+    plotter = GraphPlotter(10000, 100, 5)
+    plotter.plot_graphs()

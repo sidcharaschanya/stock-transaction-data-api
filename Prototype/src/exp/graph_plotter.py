@@ -27,7 +27,7 @@ class GraphPlotter:
             plt.plot(self.__x, np.poly1d(np.polyfit(func(self.__x), y, 1))(func(self.__x)), color + "--")
 
         if labels:
-            plt.legend()
+            plt.legend(loc = "upper left")
 
         plt.title(op + " Time Vs. Transaction Count")
         plt.xlabel("Number of Transactions Under a Particular Stock")

@@ -114,9 +114,13 @@ class ExperimentalFramework:
                     if case == Case.LOG_RANDOM:
                         self.__test_all_ordered_ops(n_curr, platform, stock_name)
 
+    def __output_times(self):
+        [print(f"{case.name} = {self.__times[case]}") for case in Case]
+
     def run_tests(self) -> None:
         self.__test_log(Case.LOG_RANDOM)
         self.__test_log(Case.LOG_SORTED)
+        self.__output_times()
 
     def get_n_transactions_list(self) -> list:
         return list(range(self.__n_step, self.__n_transactions + 1, self.__n_step))

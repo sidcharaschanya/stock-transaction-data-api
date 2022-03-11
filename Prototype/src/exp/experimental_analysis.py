@@ -26,7 +26,8 @@ floorTransactionTimes = []
 ceilingTransactionTimes = []
 rangeTransactionTimes = []
 sortedTransactionsTimes = []
-
+minTransactionsTimes = []
+maxTransactionsTimes = []
 
 # generate 3 random stock names from start, middle and end of the list.
 def generateStockNames():
@@ -335,9 +336,11 @@ def testing(stockName):
     time = outputData(sortedTransactionsTest(stockName, stp))
     sortedTransactionsTimes.append(time)
     print("Data for minTransactions tests: \n")
-    outputData(minTransactionsTest(stockName, stp))
+    times = outputData(minTransactionsTest(stockName, stp))
+    minTransactionsTimes.append(times)
     print("Data for maxTransactions tests: \n")
-    outputData(maxTransactionsTest(stockName, stp))
+    times = outputData(maxTransactionsTest(stockName, stp))
+    maxTransactionsTimes.append(times)
     print("Data for floorTransactions tests: \n")
     times = outputData(testingFloorTransactions(stockName, stp))
     floorTransactionTimes.append(times)
@@ -379,6 +382,8 @@ def runTests():
     graphs.plotCeilingTransactions(N, ceilingTransactionTimes, stockName1, stockName2, stockName3)
     graphs.plotRangeTransactions(N, rangeTransactionTimes, stockName1, stockName2, stockName3)
     graphs.plotSortedTransactions(N, sortedTransactionsTimes, stockName1, stockName2, stockName3)
+    graphs.plotMinTransactions(N, minTransactionsTimes, stockName1, stockName2, stockName3)
+    graphs.plotMaxTransactions(N, maxTransactionsTimes, stockName1, stockName2, stockName3)
 
 
 runTests()

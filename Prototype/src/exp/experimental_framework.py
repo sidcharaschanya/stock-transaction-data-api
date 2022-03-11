@@ -120,4 +120,4 @@ class ExperimentalFramework:
         return list(range(self.__n_step, self.__n_transactions + 1, self.__n_step))
 
     def get_times(self, case: Case) -> list:
-        return [sum(time) / len(time) for time in self.__times[case].values()]
+        return [sum(time) / self.__n_trials for time in self.__times[case].values()]

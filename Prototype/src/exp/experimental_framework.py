@@ -55,10 +55,10 @@ class ExperimentalFramework:
 
     def __test_ordered_op(self, n_curr: int, func: callable, case: Case, args: list) -> list:
         start = timeit.default_timer()
-        trade = func(*args)
+        trades = func(*args)
         end = timeit.default_timer()
         self.__times[case][n_curr].append(end - start)
-        return trade
+        return trades
 
     def __test_all_ordered_ops(self, n_curr: int, platform: StockTradingPlatform, stock_name: str) -> None:
         sorted_trades = self.__test_ordered_op(n_curr, platform.sortedTransactions, Case.SORTED, [
@@ -114,7 +114,7 @@ class ExperimentalFramework:
                     if case == Case.LOG_RANDOM:
                         self.__test_all_ordered_ops(n_curr, platform, stock_name)
 
-    def __output_times(self):
+    def __output_times(self) -> None:
         [print(f"{case.name} = {self.__times[case]}") for case in Case]
 
     def run_tests(self) -> None:
@@ -126,5 +126,4 @@ class ExperimentalFramework:
         return list(range(self.__n_step, self.__n_transactions + 1, self.__n_step))
 
     def get_times(self, case: Case) -> list:
-        times = self.__times[case].values()
-        return [sum(time) / len(time) for time in times]
+        return [sum(time) / len(time) for time in self.__times[case].values()]

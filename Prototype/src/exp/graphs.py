@@ -101,15 +101,64 @@ def plotSortedTransactions(x, times, stockName1, stockName2, stockName3):
     plt.plot(x, y3, '-', color = "blue", label = stockName2)
     plt.plot(x, y2, '-', color = "green", label = stockName3)
 
-    plt.title("Average log time against number of insertions for logTransactions")
+    plt.title("Average time to sort the transactions")
     plt.legend()
-    plt.ylabel('Average log time')
-    plt.xlabel('Number of insertions')
+    plt.ylabel('Average time')
+    plt.xlabel('Number of transactions in the platform')
 
     # setting y-axis range
     plt.ylim([0, 0.0009])
     plt.show()
 
+def plotMinTransactions(x, times, stockName1, stockName2, stockName3):
+    y1 = []
+    y2 = []
+    y3 = []
+
+    numOfTransactions = len(x)
+    for i in range(numOfTransactions):
+        index = i * 3
+        y1.append(times[index])
+        y2.append(times[index + 1])
+        y3.append(times[index + 2])
+
+    plt.plot(x, y1, '-', color = "red", label = stockName1)
+    plt.plot(x, y3, '-', color = "blue", label = stockName2)
+    plt.plot(x, y2, '-', color = "green", label = stockName3)
+
+    plt.title("Average time to find the minimum transaction")
+    plt.legend()
+    plt.ylabel('Average time')
+    plt.xlabel('Number of transactions in the platform')
+
+    # setting y-axis range
+    plt.ylim([0, 0.0009])
+    plt.show()
+
+def plotMaxTransactions(x, times, stockName1, stockName2, stockName3):
+    y1 = []
+    y2 = []
+    y3 = []
+
+    numOfTransactions = len(x)
+    for i in range(numOfTransactions):
+        index = i * 3
+        y1.append(times[index])
+        y2.append(times[index + 1])
+        y3.append(times[index + 2])
+
+    plt.plot(x, y1, '-', color = "red", label = stockName1)
+    plt.plot(x, y3, '-', color = "blue", label = stockName2)
+    plt.plot(x, y2, '-', color = "green", label = stockName3)
+
+    plt.title("Average time to find the maximum transaction")
+    plt.legend()
+    plt.ylabel('Average time')
+    plt.xlabel('Number of transactions in the platform')
+
+    # setting y-axis range
+    plt.ylim([0, 0.0009])
+    plt.show()
 
 def y_coords(x, times):
     y1 = []

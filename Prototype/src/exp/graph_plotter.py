@@ -13,7 +13,7 @@ class GraphPlotter:
     @staticmethod
     def __get_y_lim(ys: t.List[list]) -> t.List[float]:
         return [
-            min([sorted(y)[int((len(y) - 1) * 0.03)] * 0.75 for y in ys]),
+            min([sorted(y)[0] * 0.75 for y in ys]),
             max([sorted(y)[int((len(y) - 1) * 0.97)] * 1.1 for y in ys])
         ]
 

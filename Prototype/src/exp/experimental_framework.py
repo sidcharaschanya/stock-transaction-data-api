@@ -34,7 +34,7 @@ class ExperimentalFramework:
     def __trade_value(transaction: list) -> float:
         return transaction[1] * transaction[2]
 
-    def __gen_transactions_same_stock(self, case: Case) -> t.Tuple[t.List[list], str]:
+    def __gen_transactions_same_stock(self, case: Case) -> t.List[list]:
         transactions = self.__generator.generateTransactionData(self.__n_transactions)
 
         if case == Case.LOG_SORTED:
@@ -45,7 +45,7 @@ class ExperimentalFramework:
         for i in range(len(transactions)):
             transactions[i][0] = stock_name
 
-        return transactions, stock_name
+        return transactions
 
     def __test_ordered_op(self, n_curr: int, func: callable, case: Case, args: list) -> list:
         start = timeit.default_timer()
@@ -94,19 +94,18 @@ class ExperimentalFramework:
     def __test_log(self, case: Case) -> None:
         for _ in range(self.__n_trials):
             platform = StockTradingPlatform()
-            transactions, stock_name = self.__gen_transactions_same_stock(case)
+            transactions = self.__gen_transactions_same_stock(case)
 
             for i, transaction in enumerate(transactions):
                 start = timeit.default_timer()
                 platform.logTransaction(transaction)
                 end = timeit.default_timer()
-                n_curr = i + 1
 
-                if n_curr % self.__n_step == 0:
-                    self.__times[case][n_curr].append(end - start)
+                if (i + 1) % self.__n_step == 0:
+                    self.__times[case][i + 1].append(end - start)
 
                     if case == Case.LOG_RANDOM:
-                        self.__test_all_ordered_ops(n_curr, platform, stock_name)
+                        self.__test_all_ordered_ops(i + 1, platform, transaction[0])
 
     def __output_times(self) -> None:
         print("CASE = {num_trades_1: [trial_1, ..., trial_n], ..., num_trades_n: [trial_1, ..., trial_n]}\n")

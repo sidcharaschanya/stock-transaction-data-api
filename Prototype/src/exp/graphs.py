@@ -110,6 +110,7 @@ def plotSortedTransactions(x, times, stockName1, stockName2, stockName3):
     plt.ylim([0, 0.0009])
     plt.show()
 
+
 def plotMinTransactions(x, times, stockName1, stockName2, stockName3):
     y1 = []
     y2 = []
@@ -135,6 +136,7 @@ def plotMinTransactions(x, times, stockName1, stockName2, stockName3):
     plt.ylim([0, 0.0009])
     plt.show()
 
+
 def plotMaxTransactions(x, times, stockName1, stockName2, stockName3):
     y1 = []
     y2 = []
@@ -159,6 +161,7 @@ def plotMaxTransactions(x, times, stockName1, stockName2, stockName3):
     # setting y-axis range
     plt.ylim([0, 0.0009])
     plt.show()
+
 
 def y_coords(x, times):
     y1 = []

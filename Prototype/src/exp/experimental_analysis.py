@@ -29,6 +29,7 @@ sortedTransactionsTimes = []
 minTransactionsTimes = []
 maxTransactionsTimes = []
 
+
 # generate 3 random stock names from start, middle and end of the list.
 def generateStockNames():
     firstFour = stockNames[0:4]

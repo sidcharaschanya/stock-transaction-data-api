@@ -34,19 +34,13 @@ class ExperimentalFramework:
     def __trade_value(transaction: list) -> float:
         return transaction[1] * transaction[2]
 
-    def __gen_stock_name(self) -> str:
-        return r.choice(self.__generator.stockNames)
-
-    def __gen_trade_value(self) -> float:
-        return round(r.uniform(self.__generator.minTradeValue, self.__generator.maxTradeValue), 2)
-
     def __gen_transactions_same_stock(self, case: Case) -> t.Tuple[t.List[list], str]:
         transactions = self.__generator.generateTransactionData(self.__n_transactions)
 
         if case == Case.LOG_SORTED:
             transactions.sort(key = ExperimentalFramework.__trade_value, reverse = True)
 
-        stock_name = self.__gen_stock_name()
+        stock_name = self.__generator.getStockName()
 
         for i in range(len(transactions)):
             transactions[i][0] = stock_name
@@ -74,7 +68,7 @@ class ExperimentalFramework:
         ])
 
         self.__test_ordered_op(n_curr, platform.floorTransactions, Case.FLOOR_RANDOM, [
-            stock_name, self.__gen_trade_value()
+            stock_name, self.__generator.getTradeValue()
         ])
 
         self.__test_ordered_op(n_curr, platform.floorTransactions, Case.FLOOR_EXISTING, [
@@ -82,7 +76,7 @@ class ExperimentalFramework:
         ])
 
         self.__test_ordered_op(n_curr, platform.ceilingTransactions, Case.CEILING_RANDOM, [
-            stock_name, self.__gen_trade_value()
+            stock_name, self.__generator.getTradeValue()
         ])
 
         self.__test_ordered_op(n_curr, platform.ceilingTransactions, Case.CEILING_EXISTING, [
@@ -90,7 +84,7 @@ class ExperimentalFramework:
         ])
 
         range_random_args = [stock_name]
-        range_random_args.extend(sorted([self.__gen_trade_value(), self.__gen_trade_value()]))
+        range_random_args.extend(sorted([self.__generator.getTradeValue(), self.__generator.getTradeValue()]))
         self.__test_ordered_op(n_curr, platform.rangeTransactions, Case.RANGE_RANDOM, range_random_args)
 
         range_all_args = [stock_name]

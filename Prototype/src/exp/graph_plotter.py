@@ -73,6 +73,5 @@ class GraphPlotter:
         #                     'Full range', 'Random Range')
 
 
-if __name__ == '__main__':
-    plotter = GraphPlotter(10000, 100, 5)
-    plotter.plot_graphs()
+plotter = GraphPlotter(10000, 100, 10)
+plotter.plot_graphs()

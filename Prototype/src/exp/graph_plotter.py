@@ -1,6 +1,7 @@
 from src.exp.experimental_framework import Case, ExperimentalFramework
 import matplotlib.pyplot as plt
-from numpy import unique, polyfit, poly1d, log2
+from numpy import polyfit, poly1d, log2
+import typing as t
 
 
 class GraphPlotter:
@@ -10,15 +11,15 @@ class GraphPlotter:
         self.__x = self.__ef.get_n_transactions_list()
 
     @staticmethod
-    def __get_bounds(y) -> tuple[float, float]:
+    def __get_bounds(y) -> t.Tuple[float, float]:
         y.sort()
         return 0.25 * y[int(len(y) * 0.02)], y[int(len(y) * 0.97)] * 1.2
 
-    def __general_plot(self, title, y, y2=None, y1_label=None, y2_label=None, best_func=lambda x: x):
+    def __general_plot(self, title, y, y2 = None, y1_label = None, y2_label = None, best_func = lambda x: x):
         if y1_label and y2_label:
-            plt.plot(self.__x, y, '+', label=y1_label)
+            plt.plot(self.__x, y, '+', label = y1_label)
             if y2:
-                plt.plot(self.__x, y2, '*', label=y2_label)
+                plt.plot(self.__x, y2, '*', label = y2_label)
             plt.legend()
         else:
             plt.plot(self.__x, y, '+')
@@ -42,9 +43,9 @@ class GraphPlotter:
         self.__general_plot('Sorted List Retrieval',
                             self.__ef.get_times(Case.SORTED))
         self.__general_plot('Min Transactions',
-                            self.__ef.get_times(Case.MIN), best_func=lambda x: log2(x))
+                            self.__ef.get_times(Case.MIN), best_func = lambda x: log2(x))
         self.__general_plot('Max Transactions',
-                            self.__ef.get_times(Case.MAX), best_func=lambda x: log2(x))
+                            self.__ef.get_times(Case.MAX), best_func = lambda x: log2(x))
         self.__general_plot('Retrieve Floor',
                             self.__ef.get_times(Case.FLOOR_RANDOM),
                             self.__ef.get_times(Case.FLOOR_EXISTING),

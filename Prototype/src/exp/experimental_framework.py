@@ -115,6 +115,7 @@ class ExperimentalFramework:
                         self.__test_all_ordered_ops(n_curr, platform, stock_name)
 
     def __output_times(self) -> None:
+        print("CASE = {num_trades_1: [trial_1, ..., trial_n], ..., num_trades_n: [trial_1, ..., trial_n]}\n")
         [print(f"{case.name} = {self.__times[case]}") for case in Case]
 
     def run_tests(self) -> None:

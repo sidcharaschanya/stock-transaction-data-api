@@ -109,7 +109,7 @@ class ExperimentalFramework:
 
     def __output_times(self) -> None:
         print("CASE = {num_trades_1: [trial_1, ..., trial_n], ..., num_trades_n: [trial_1, ..., trial_n]}\n")
-        [print(f"{case.name} = {self.__times[case]}") for case in Case]
+        [print(f"{case.name} = {self.__times[case]}\n") for case in Case]
 
     def run_tests(self) -> None:
         self.__test_log(Case.LOG_RANDOM)

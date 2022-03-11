@@ -1,6 +1,6 @@
 from src.exp.experimental_framework import Case, ExperimentalFramework
 import matplotlib.pyplot as plt
-from numpy import polyfit, poly1d, log2
+import numpy as np
 import typing as t
 
 
@@ -11,55 +11,68 @@ class GraphPlotter:
         self.__x = self.__ef.get_n_transactions_list()
 
     @staticmethod
-    def __get_bounds(y) -> t.Tuple[float, float]:
+    def __get_bounds(y: list) -> t.List[float]:
         y.sort()
-        return 0.25 * y[int(len(y) * 0.02)], y[int(len(y) * 0.97)] * 1.2
+        return [0.2 * y[int(len(y) * 0.03)], y[int(len(y) * 0.97)] * 1.2]
 
-    def __general_plot(self, title, y, y2 = None, y1_label = None, y2_label = None, best_func = lambda x: x):
-        if y1_label and y2_label:
-            plt.plot(self.__x, y, '+', label = y1_label)
-            if y2:
-                plt.plot(self.__x, y2, '*', label = y2_label)
-            plt.legend()
-        else:
-            plt.plot(self.__x, y, '+')
-            if y2:
-                plt.plot(self.__x, y2, 'g*')
+    def __general_plot(self, title: str, ys: list, colors: list, funcs: list, labels: list = None) -> None:
+        for i, (y, color, func) in enumerate(zip(ys, colors, funcs)):
+            if labels:
+                plt.plot(self.__x, y, color + ".", label = labels[i])
+            else:
+                plt.plot(self.__x, y, color + ".")
 
-        plt.plot(self.__x, poly1d(polyfit(best_func(self.__x), y, 1))(best_func(self.__x)), 'b--')
-        if y2:
-            plt.plot(self.__x, poly1d(polyfit(best_func(self.__x), y2, 1))(best_func(self.__x)), 'g--')
-        plt.xlabel("Input Size")
-        plt.ylabel("Time of execution")
+            plt.plot(self.__x, np.poly1d(np.polyfit(func(self.__x), y, 1))(func(self.__x)), color + "--")
+
         plt.title(title)
-        plt.ylim(list(self.__get_bounds(y)))
+        plt.xlabel("Number of Transactions Under a Particular Stock")
+        plt.ylabel("Time of Execution (s)")
+        plt.ylim(self.__get_bounds(ys[0]))
+
+        if labels:
+            plt.legend()
+
         plt.show()
 
     def plot_graphs(self):
-        self.__general_plot('Log Transactions',
-                            self.__ef.get_times(Case.LOG_SORTED),
-                            self.__ef.get_times(Case.LOG_RANDOM),
-                            'Sorted', 'Random', lambda x: log2(x))
-        self.__general_plot('Sorted List Retrieval',
-                            self.__ef.get_times(Case.SORTED))
-        self.__general_plot('Min Transactions',
-                            self.__ef.get_times(Case.MIN), best_func = lambda x: log2(x))
-        self.__general_plot('Max Transactions',
-                            self.__ef.get_times(Case.MAX), best_func = lambda x: log2(x))
-        self.__general_plot('Retrieve Floor',
-                            self.__ef.get_times(Case.FLOOR_RANDOM),
-                            self.__ef.get_times(Case.FLOOR_EXISTING),
-                            'Random', 'Existing', lambda x: log2(x))
-        self.__general_plot('Retrieve Ceiling',
-                            self.__ef.get_times(Case.CEILING_RANDOM),
-                            self.__ef.get_times(Case.CEILING_EXISTING),
-                            'Random', 'Existing', lambda x: log2(x))
-        self.__general_plot('Retrieve Range',
-                            self.__ef.get_times(Case.RANGE_ALL),
-                            self.__ef.get_times(Case.RANGE_RANDOM),
-                            'Full range', 'Random Range')
+        self.__general_plot(
+            "Log Transactions",
+            [self.__ef.get_times(Case.LOG_RANDOM), self.__ef.get_times(Case.LOG_SORTED)],
+            ["b", "m"],
+            [np.log2, np.log2],
+            ["Random", "Sorted"]
+        )
+
+        self.__general_plot(
+            "Sorted List Retrieval",
+            [self.__ef.get_times(Case.SORTED)],
+            ["c"],
+            [lambda x: x]
+        )
+
+        self.__general_plot(
+            "Min Transactions",
+            [self.__ef.get_times(Case.MIN)],
+            ["g"],
+            [np.log2]
+        )
+
+        # self.__general_plot('Max Transactions',
+        #                     self.__ef.get_times(Case.MAX), best_func = lambda x: log2(x))
+        # self.__general_plot('Retrieve Floor',
+        #                     self.__ef.get_times(Case.FLOOR_RANDOM),
+        #                     self.__ef.get_times(Case.FLOOR_EXISTING),
+        #                     'Random', 'Existing', lambda x: log2(x))
+        # self.__general_plot('Retrieve Ceiling',
+        #                     self.__ef.get_times(Case.CEILING_RANDOM),
+        #                     self.__ef.get_times(Case.CEILING_EXISTING),
+        #                     'Random', 'Existing', lambda x: log2(x))
+        # self.__general_plot('Retrieve Range',
+        #                     self.__ef.get_times(Case.RANGE_ALL),
+        #                     self.__ef.get_times(Case.RANGE_RANDOM),
+        #                     'Full range', 'Random Range')
 
 
 if __name__ == '__main__':
-    plotter = GraphPlotter(10000, 100, 30)
+    plotter = GraphPlotter(10000, 100, 5)
     plotter.plot_graphs()

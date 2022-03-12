@@ -1,11 +1,8 @@
 from src.exp.transaction_data_generator import TransactionDataGenerator
 from src.stocks.platform import StockTradingPlatform
-from src.stocks.trade import Trade
-import datetime as d
 import enum as e
-import random as r
+import random
 import timeit
-import typing as t
 
 
 class Case(e.Enum):
@@ -29,13 +26,12 @@ class ExperimentalFramework:
         self.__n_trials = n_trials
         self.__generator = TransactionDataGenerator()
         self.__times = {case: {i: [] for i in self.get_n_transactions_list()} for case in Case}
-        r.seed(d.datetime.now())
 
     @staticmethod
     def __trade_value(transaction: list) -> float:
         return transaction[1] * transaction[2]
 
-    def __gen_transactions_same_stock(self, case: Case) -> t.List[list]:
+    def __gen_transactions_same_stock(self, case: Case) -> list:
         transactions = self.__generator.generateTransactionData(self.__n_transactions)
 
         if case == Case.LOG_SORTED:
@@ -48,7 +44,7 @@ class ExperimentalFramework:
 
         return transactions
 
-    def __test_ordered_op(self, n_curr: int, func: callable, case: Case, args: list) -> t.List[Trade]:
+    def __test_ordered_op(self, n_curr: int, func: callable, case: Case, args: list) -> list:
         start = timeit.default_timer()
         trades = func(*args)
         end = timeit.default_timer()
@@ -73,7 +69,7 @@ class ExperimentalFramework:
         ])
 
         self.__test_ordered_op(n_curr, platform.floorTransactions, Case.FLOOR_EXISTING, [
-            stock_name, r.choice(sorted_trades).get_trade_val()
+            stock_name, random.choice(sorted_trades).get_trade_val()
         ])
 
         self.__test_ordered_op(n_curr, platform.ceilingTransactions, Case.CEILING_RANDOM, [
@@ -81,7 +77,7 @@ class ExperimentalFramework:
         ])
 
         self.__test_ordered_op(n_curr, platform.ceilingTransactions, Case.CEILING_EXISTING, [
-            stock_name, r.choice(sorted_trades).get_trade_val()
+            stock_name, random.choice(sorted_trades).get_trade_val()
         ])
 
         range_random_args = [stock_name]
@@ -117,8 +113,8 @@ class ExperimentalFramework:
         self.__test_log(Case.LOG_SORTED)
         self.__output_times()
 
-    def get_n_transactions_list(self) -> t.List[int]:
+    def get_n_transactions_list(self) -> list:
         return list(range(self.__n_step, self.__n_transactions + 1, self.__n_step))
 
-    def get_times(self, case: Case) -> t.List[float]:
+    def get_times(self, case: Case) -> list:
         return [sum(time) / self.__n_trials for time in self.__times[case].values()]

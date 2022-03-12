@@ -1,7 +1,6 @@
 from src.exp.experimental_framework import Case, ExperimentalFramework
 import matplotlib.pyplot as plt
 import numpy as np
-import typing as t
 
 
 class GraphPlotter:
@@ -11,7 +10,7 @@ class GraphPlotter:
         self.__x = self.__ef.get_n_transactions_list()
 
     @staticmethod
-    def __get_y_lim(ys: t.List[list]) -> t.List[float]:
+    def __get_y_lim(ys: list) -> list:
         return [
             min([sorted(y)[0] * 0.75 for y in ys]),
             max([sorted(y)[int((len(y) - 1) * 0.97)] * 1.1 for y in ys])

@@ -1,5 +1,6 @@
 from src.exp.transaction_data_generator import TransactionDataGenerator
 from src.stocks.platform import StockTradingPlatform
+from src.stocks.trade import Trade
 import datetime as d
 import enum as e
 import random as r
@@ -47,7 +48,7 @@ class ExperimentalFramework:
 
         return transactions
 
-    def __test_ordered_op(self, n_curr: int, func: callable, case: Case, args: list) -> list:
+    def __test_ordered_op(self, n_curr: int, func: callable, case: Case, args: list) -> t.List[Trade]:
         start = timeit.default_timer()
         trades = func(*args)
         end = timeit.default_timer()
@@ -93,8 +94,8 @@ class ExperimentalFramework:
 
     def __test_log(self, case: Case) -> None:
         for _ in range(self.__n_trials):
-            platform = StockTradingPlatform()
             transactions = self.__gen_transactions_same_stock(case)
+            platform = StockTradingPlatform()
 
             for i, transaction in enumerate(transactions):
                 start = timeit.default_timer()
@@ -116,8 +117,8 @@ class ExperimentalFramework:
         self.__test_log(Case.LOG_SORTED)
         self.__output_times()
 
-    def get_n_transactions_list(self) -> list:
+    def get_n_transactions_list(self) -> t.List[int]:
         return list(range(self.__n_step, self.__n_transactions + 1, self.__n_step))
 
-    def get_times(self, case: Case) -> list:
+    def get_times(self, case: Case) -> t.List[float]:
         return [sum(time) / self.__n_trials for time in self.__times[case].values()]

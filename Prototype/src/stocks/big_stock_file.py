@@ -19,7 +19,7 @@ class Trade:
 
 # This class models the nodes used in the TradeTree class.
 # The trade value is interpreted as the key of a TradeNode object.
-# The array of trades is interpreted as the value of a TradeNode object.
+# The list of trades is interpreted as the value of a TradeNode object.
 class TradeNode:
     RED = True
     BLACK = False

@@ -1,10 +1,7 @@
-import datetime as d
-
-
 # This class models a transaction record.
 # It stores all the relevant information associated with a single transaction record.
 class Trade:
-    def __init__(self, name: str, price: float, quantity: int, time: d.datetime) -> None:
+    def __init__(self, name: str, price: float, quantity: int, time) -> None:
         self.name = name
         self.price = price
         self.quantity = quantity

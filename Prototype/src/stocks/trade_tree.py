@@ -1,6 +1,5 @@
 from src.stocks.trade import Trade
 from src.stocks.trade_node import TradeNode
-import typing as t
 
 
 # This class models all information for a single stock name.
@@ -40,7 +39,7 @@ class TradeTree:
         # Recursively balance the TradeTree to maintain logarithmic height
         return TradeTree.__balance(node)
 
-    def get_all_trades(self, node: TradeNode = None) -> t.List[Trade]:
+    def get_all_trades(self, node: TradeNode = None) -> list:
         # Base case where the root of the TradeTree has not been initialized
         if self.root is None:
             return []
@@ -61,7 +60,7 @@ class TradeTree:
 
         return all_trades
 
-    def get_min_trades(self) -> t.List[Trade]:
+    def get_min_trades(self) -> list:
         if self.root is None:
             return []
 
@@ -72,7 +71,7 @@ class TradeTree:
 
         return node.trades
 
-    def get_max_trades(self) -> t.List[Trade]:
+    def get_max_trades(self) -> list:
         if self.root is None:
             return []
 
@@ -83,7 +82,7 @@ class TradeTree:
 
         return node.trades
 
-    def get_floor_trades(self, high: float) -> t.List[Trade]:
+    def get_floor_trades(self, high: float) -> list:
         node = self.root
         floor_trades = []
 
@@ -98,7 +97,7 @@ class TradeTree:
 
         return floor_trades
 
-    def get_ceil_trades(self, low: float) -> t.List[Trade]:
+    def get_ceil_trades(self, low: float) -> list:
         node = self.root
         ceil_trades = []
 
@@ -113,7 +112,7 @@ class TradeTree:
 
         return ceil_trades
 
-    def get_trades_in_range(self, low: float, high: float, node: TradeNode = None) -> t.List[Trade]:
+    def get_trades_in_range(self, low: float, high: float, node: TradeNode = None) -> list:
         # Ensure that the low and high parameters are valid
         if low > high or low < 0:
             raise ValueError("Invalid Range")

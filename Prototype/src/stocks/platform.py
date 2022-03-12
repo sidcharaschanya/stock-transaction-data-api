@@ -1,7 +1,6 @@
 from src.stocks.abstract_platform import AbstractStockTradingPlatform
 from src.stocks.trade import Trade
 from src.stocks.trade_tree import TradeTree
-import typing as t
 
 
 # noinspection PyPep8Naming
@@ -25,25 +24,25 @@ class StockTradingPlatform(AbstractStockTradingPlatform):
         self.__validate_trade(trade)
         self.__trade_trees[trade.name].put_trade(trade)
 
-    def sortedTransactions(self, stockName: str) -> t.List[Trade]:
+    def sortedTransactions(self, stockName: str) -> list:
         if stockName not in self.STOCKS:
             raise ValueError("sortedTransactions: Invalid Stock Name: " + stockName)
 
         return self.__trade_trees[stockName].get_all_trades()
 
-    def minTransactions(self, stockName: str) -> t.List[Trade]:
+    def minTransactions(self, stockName: str) -> list:
         if stockName not in self.STOCKS:
             raise ValueError("minTransactions: Invalid Stock Name: " + stockName)
 
         return self.__trade_trees[stockName].get_min_trades()
 
-    def maxTransactions(self, stockName: str) -> t.List[Trade]:
+    def maxTransactions(self, stockName: str) -> list:
         if stockName not in self.STOCKS:
             raise ValueError("maxTransactions: Invalid Stock Name: " + stockName)
 
         return self.__trade_trees[stockName].get_max_trades()
 
-    def floorTransactions(self, stockName: str, thresholdValue: float) -> t.List[Trade]:
+    def floorTransactions(self, stockName: str, thresholdValue: float) -> list:
         if stockName not in self.STOCKS:
             raise ValueError("floorTransactions: Invalid Stock Name: " + stockName)
 
@@ -52,7 +51,7 @@ class StockTradingPlatform(AbstractStockTradingPlatform):
 
         return self.__trade_trees[stockName].get_floor_trades(thresholdValue)
 
-    def ceilingTransactions(self, stockName: str, thresholdValue: float) -> t.List[Trade]:
+    def ceilingTransactions(self, stockName: str, thresholdValue: float) -> list:
         if stockName not in self.STOCKS:
             raise ValueError("ceilingTransactions: Invalid Stock Name: " + stockName)
 
@@ -61,7 +60,7 @@ class StockTradingPlatform(AbstractStockTradingPlatform):
 
         return self.__trade_trees[stockName].get_ceil_trades(thresholdValue)
 
-    def rangeTransactions(self, stockName: str, fromValue: float, toValue: float) -> t.List[Trade]:
+    def rangeTransactions(self, stockName: str, fromValue: float, toValue: float) -> list:
         if stockName not in self.STOCKS:
             raise ValueError("rangeTransactions: Invalid Stock Name: " + stockName)
 

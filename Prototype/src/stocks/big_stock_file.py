@@ -1,13 +1,8 @@
 # ===========================INCLUDE ALL BELOW IN JUPYTER NOTEBOOK===========================
-
-import datetime as d
-import typing as t
-
-
 # This class models a transaction record.
 # It stores all the relevant information associated with a single transaction record.
 class Trade:
-    def __init__(self, name: str, price: float, quantity: int, time: d.datetime) -> None:
+    def __init__(self, name: str, price: float, quantity: int, time) -> None:
         self.name = name
         self.price = price
         self.quantity = quantity
@@ -32,7 +27,7 @@ class TradeNode:
     def __init__(self, trade: Trade) -> None:
         self.trade_val = trade.get_trade_val()
 
-        # Array of all Trade objects with the same trade value
+        # List of all Trade objects with the same trade value
         self.trades = [trade]
 
         self.left = None
@@ -77,7 +72,7 @@ class TradeTree:
         # Recursively balance the TradeTree to maintain logarithmic height
         return TradeTree.__balance(node)
 
-    def get_all_trades(self, node: TradeNode = None) -> t.List[Trade]:
+    def get_all_trades(self, node: TradeNode = None) -> list:
         # Base case where the root of the TradeTree has not been initialized
         if self.root is None:
             return []
@@ -98,7 +93,7 @@ class TradeTree:
 
         return all_trades
 
-    def get_min_trades(self) -> t.List[Trade]:
+    def get_min_trades(self) -> list:
         if self.root is None:
             return []
 
@@ -109,7 +104,7 @@ class TradeTree:
 
         return node.trades
 
-    def get_max_trades(self) -> t.List[Trade]:
+    def get_max_trades(self) -> list:
         if self.root is None:
             return []
 
@@ -120,7 +115,7 @@ class TradeTree:
 
         return node.trades
 
-    def get_floor_trades(self, high: float) -> t.List[Trade]:
+    def get_floor_trades(self, high: float) -> list:
         node = self.root
         floor_trades = []
 
@@ -135,7 +130,7 @@ class TradeTree:
 
         return floor_trades
 
-    def get_ceil_trades(self, low: float) -> t.List[Trade]:
+    def get_ceil_trades(self, low: float) -> list:
         node = self.root
         ceil_trades = []
 
@@ -150,7 +145,7 @@ class TradeTree:
 
         return ceil_trades
 
-    def get_trades_in_range(self, low: float, high: float, node: TradeNode = None) -> t.List[Trade]:
+    def get_trades_in_range(self, low: float, high: float, node: TradeNode = None) -> list:
         # Ensure that the low and high parameters are valid
         if low > high or low < 0:
             raise ValueError("Invalid Range")

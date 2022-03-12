@@ -1,4 +1,4 @@
-from src.exp.experimental_framework import Case, ExperimentalFramework
+from src.exp.experimental_framework import ExperimentalFramework
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -37,7 +37,10 @@ class GraphPlotter:
     def plot_graphs(self) -> None:
         self.__general_plot(
             "Log Transaction",
-            [self.__ef.get_times(Case.LOG_RANDOM), self.__ef.get_times(Case.LOG_SORTED)],
+            [
+                self.__ef.get_times(ExperimentalFramework.LOG_RANDOM),
+                self.__ef.get_times(ExperimentalFramework.LOG_SORTED)
+            ],
             ["m", "b"],
             [np.log2, np.log2],
             ["Random Insertion Order", "Sorted Insertion Order"]
@@ -45,28 +48,31 @@ class GraphPlotter:
 
         self.__general_plot(
             "Sorted Transactions",
-            [self.__ef.get_times(Case.SORTED)],
+            [self.__ef.get_times(ExperimentalFramework.SORTED)],
             ["b"],
             [lambda x: x]
         )
 
         self.__general_plot(
             "Min Transactions",
-            [self.__ef.get_times(Case.MIN)],
+            [self.__ef.get_times(ExperimentalFramework.MIN)],
             ["r"],
             [np.log2]
         )
 
         self.__general_plot(
             "Max Transactions",
-            [self.__ef.get_times(Case.MAX)],
+            [self.__ef.get_times(ExperimentalFramework.MAX)],
             ["g"],
             [np.log2]
         )
 
         self.__general_plot(
             "Floor Transactions",
-            [self.__ef.get_times(Case.FLOOR_RANDOM), self.__ef.get_times(Case.FLOOR_EXISTING)],
+            [
+                self.__ef.get_times(ExperimentalFramework.FLOOR_RANDOM),
+                self.__ef.get_times(ExperimentalFramework.FLOOR_EXISTING)
+            ],
             ["r", "b"],
             [np.log2, np.log2],
             ["Random Threshold Values", "Threshold Values Existing in Tree"]
@@ -74,7 +80,10 @@ class GraphPlotter:
 
         self.__general_plot(
             "Ceiling Transactions",
-            [self.__ef.get_times(Case.CEILING_RANDOM), self.__ef.get_times(Case.CEILING_EXISTING)],
+            [
+                self.__ef.get_times(ExperimentalFramework.CEILING_RANDOM),
+                self.__ef.get_times(ExperimentalFramework.CEILING_EXISTING)
+            ],
             ["g", "b"],
             [np.log2, np.log2],
             ["Random Threshold Values", "Threshold Values Existing in Tree"]
@@ -82,7 +91,10 @@ class GraphPlotter:
 
         self.__general_plot(
             "Range Transactions",
-            [self.__ef.get_times(Case.RANGE_RANDOM), self.__ef.get_times(Case.RANGE_ALL)],
+            [
+                self.__ef.get_times(ExperimentalFramework.RANGE_RANDOM),
+                self.__ef.get_times(ExperimentalFramework.RANGE_ALL)
+            ],
             ["c", "b"],
             [lambda x: x, lambda x: x],
             ["Random Range", "Full Range"]

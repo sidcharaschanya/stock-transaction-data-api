@@ -105,14 +105,13 @@ class ExperimentalFramework:
                     if case == ExperimentalFramework.LOG_RANDOM:
                         self.__test_all_ordered_ops(i + 1, platform, transaction[0])
 
-    def __output_times(self) -> None:
-        print("CASE #i = {num_trades_1: [trial_1, ..., trial_n], ..., num_trades_n: [trial_1, ..., trial_n]}\n")
-        [print(f"CASE #{case} = {self.__times[case]}\n") for case in range(11)]
-
     def run_tests(self) -> None:
         self.__test_log(ExperimentalFramework.LOG_RANDOM)
         self.__test_log(ExperimentalFramework.LOG_SORTED)
-        self.__output_times()
+
+    def output_times(self) -> None:
+        print("CASE #i = {num_trades_1: [trial_1, ..., trial_n], ..., num_trades_n: [trial_1, ..., trial_n]}\n")
+        [print(f"CASE #{case} = {self.__times[case]}\n") for case in range(11)]
 
     def get_n_transactions_list(self) -> list:
         return list(range(self.__n_step, self.__n_transactions + 1, self.__n_step))
@@ -124,3 +123,4 @@ class ExperimentalFramework:
 if __name__ == '__main__':
     ef = ExperimentalFramework(10000, 100, 20)
     ef.run_tests()
+    ef.output_times()

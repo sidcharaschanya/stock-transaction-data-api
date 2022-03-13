@@ -23,6 +23,7 @@ class ExperimentalFramework:
         self.__n_trials = n_trials
         self.__generator = TransactionDataGenerator()
         self.__times = {case: {i: [] for i in self.get_n_transactions_list()} for case in range(11)}
+        random.seed("COMP0005")
 
     @staticmethod
     def __trade_value(transaction: list) -> float:

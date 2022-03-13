@@ -1,11 +1,13 @@
 from src.exp.experimental_framework import ExperimentalFramework
 import matplotlib.pyplot as plt
 import numpy as np
+import random
 
 
 class GraphPlotter:
-    def __init__(self, n_transactions: int, n_step: int, n_trials: int) -> None:
-        self.__ef = ExperimentalFramework(n_transactions, n_step, n_trials)
+    def __init__(self, ef: ExperimentalFramework) -> None:
+        self.__ef = ef
+        random.seed("Algorithms (COMP0005)")
         self.__ef.run_tests()
         self.__x = self.__ef.get_n_transactions_list()
 
@@ -101,5 +103,6 @@ class GraphPlotter:
         )
 
 
-plotter = GraphPlotter(10000, 100, 20)
-plotter.plot_graphs()
+if __name__ == '__main__':
+    plotter = GraphPlotter(ExperimentalFramework(10000, 100, 20))
+    plotter.plot_graphs()

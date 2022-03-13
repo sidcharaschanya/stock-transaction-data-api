@@ -22,7 +22,6 @@ class ExperimentalFramework:
         self.__n_step = n_step
         self.__n_trials = n_trials
         self.__generator = TransactionDataGenerator()
-        random.seed("Algorithms (COMP0005)")
         self.__times = {case: {i: [] for i in self.get_n_transactions_list()} for case in range(11)}
 
     @staticmethod
@@ -122,5 +121,6 @@ class ExperimentalFramework:
         return [sum(time) / self.__n_trials for time in self.__times[case].values()]
 
 
-ef = ExperimentalFramework(10000, 100, 20)
-ef.run_tests()
+if __name__ == '__main__':
+    ef = ExperimentalFramework(10000, 100, 20)
+    ef.run_tests()

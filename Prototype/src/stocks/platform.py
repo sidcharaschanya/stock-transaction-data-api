@@ -4,9 +4,9 @@ from src.stocks.trade_tree import TradeTree
 
 
 # noinspection PyPep8Naming
-# This class implements a hash table ADT using a Python's built-in dictionary data structure.
-# The keys are the stock names and the values are references to TradeTree objects.
-# Each method in this class does thorough error checking before calling operations on the TradeTree objects.
+# This class implements a hash table ADT using a Python's built-in dictionary data structure
+# The keys are the stock names and the values are references to TradeTree objects
+# Each method in this class does thorough error checking before calling operations on the TradeTree objects
 class StockTradingPlatform(AbstractStockTradingPlatform):
     def __init__(self) -> None:
         # noinspection SpellCheckingInspection
@@ -71,7 +71,7 @@ class StockTradingPlatform(AbstractStockTradingPlatform):
 
         return self.__trade_trees[stockName].get_trades_in_range(fromValue, toValue)
 
-    # This private helper method ensures that the transaction records to be inserted are valid
+    # Ensures that the transaction records to be inserted are valid
     def __validate_trade(self, trade: Trade) -> None:
         if trade.name not in self.STOCKS:
             raise ValueError("Invalid Stock Name: " + trade.name)

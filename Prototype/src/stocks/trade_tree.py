@@ -2,12 +2,13 @@ from src.stocks.trade import Trade
 from src.stocks.trade_node import TradeNode
 
 
-# This class models all information for a single stock name.
-# All trades on a given stock will be stored here.
-# This has no model of any other stocks.
-# It implements a balanced search tree ADT using a left-leaning red-black binary search tree.
-# Each node in the tree is a TradeNode object.
+# This class models all information for a single stock name
+# All transactions on a given stock will be stored here
+# This has no model of any other stock names
+# It implements a balanced search tree ADT using a left-leaning red-black binary search tree
+# Each node in the tree is a TradeNode object
 class TradeTree:
+    # Initialize stock name and root node
     def __init__(self, stock_name: str) -> None:
         self.stock_name = stock_name
         self.root = None
@@ -17,18 +18,21 @@ class TradeTree:
         if trade.name != self.stock_name:
             raise ValueError("Invalid Stock Name")
 
+        # Reassign root with updated TradeNode object
         self.root = self.__insert(trade, self.root)
 
         # Maintain invariant of coloring root node black
         self.root.color = TradeNode.BLACK
 
     def __insert(self, trade: Trade, node: TradeNode) -> TradeNode:
+        # Recursive base case which inserts a new TradeNode object
         if node is None:
             return TradeNode(trade)
 
         # Use trade value as the key for inserting TradeNode objects into the TradeTree
         trade_val = trade.get_trade_val()
 
+        # Recursive step case to determine appropriate insertion position
         if trade_val == node.trade_val:
             node.trades.append(trade)
         elif trade_val < node.trade_val:
@@ -36,7 +40,7 @@ class TradeTree:
         elif trade_val > node.trade_val:
             node.right = self.__insert(trade, node.right)
 
-        # Recursively balance the TradeTree to maintain logarithmic height
+        # Balance the TradeTree to maintain logarithmic height
         return TradeTree.__balance(node)
 
     def get_all_trades(self, node: TradeNode = None) -> list:
@@ -44,17 +48,15 @@ class TradeTree:
         if self.root is None:
             return []
 
-        # Optional node parameter used to display some subtree
+        # Optional node parameter used to traverse some subtree
         if node is None:
             node = self.root
 
+        # In order traversal of nodes
         all_trades = []
-
         if node.left is not None:
             all_trades = self.get_all_trades(node.left)
-
         all_trades.extend(node.trades)
-
         if node.right is not None:
             all_trades.extend(self.get_all_trades(node.right))
 
@@ -64,8 +66,8 @@ class TradeTree:
         if self.root is None:
             return []
 
+        # Iteratively traverse left until the bottom of the tree
         node = self.root
-
         while node.left is not None:
             node = node.left
 
@@ -75,8 +77,8 @@ class TradeTree:
         if self.root is None:
             return []
 
+        # Iteratively traverse right until the bottom of the tree
         node = self.root
-
         while node.right is not None:
             node = node.right
 
@@ -87,12 +89,20 @@ class TradeTree:
         floor_trades = []
 
         while node is not None:
+            # If trade value equal to threshold is found
             if node.trade_val == high:
+                # Return transactions
                 return node.trades
+
+            # Else if trade value less than threshold
             elif node.trade_val < high:
+                # Store transactions and go right
                 floor_trades = node.trades
                 node = node.right
+
+            # Else if trade value greater than threshold
             elif node.trade_val > high:
+                # Go left
                 node = node.left
 
         return floor_trades
@@ -102,12 +112,20 @@ class TradeTree:
         ceil_trades = []
 
         while node is not None:
+            # If trade value equal to threshold is found
             if node.trade_val == low:
+                # Return transactions
                 return node.trades
+
+            # Else if trade value greater than threshold
             elif node.trade_val > low:
+                # Store transactions and go left
                 ceil_trades = node.trades
                 node = node.left
+
+            # Else if trade value less than threshold
             elif node.trade_val < low:
+                # Go right
                 node = node.right
 
         return ceil_trades
@@ -125,16 +143,19 @@ class TradeTree:
 
         trades_in_range = []
 
+        # In order traversal if trade value is in range
         if low <= node.trade_val <= high:
             if node.left is not None:
                 trades_in_range = self.get_trades_in_range(low, high, node.left)
-
             trades_in_range.extend(node.trades)
-
             if node.right is not None:
                 trades_in_range.extend(self.get_trades_in_range(low, high, node.right))
+
+        # Go right if trade value is less than lower bound
         elif node.trade_val < low and node.right is not None:
             trades_in_range = self.get_trades_in_range(low, high, node.right)
+
+        # Go left if trade value is greater than higher bound
         elif node.trade_val > high and node.left is not None:
             trades_in_range = self.get_trades_in_range(low, high, node.left)
 
@@ -168,15 +189,16 @@ class TradeTree:
     def __is_red(node: TradeNode) -> bool:
         return node.color == TradeNode.RED if node is not None else False
 
-    # This method maintains the structural invariants of a left-leaning red-black binary search tree
+    # Maintains the structural invariants of a left-leaning red-black binary search tree
     @staticmethod
     def __balance(node: TradeNode) -> TradeNode:
+        # Perform rotations if required
         if TradeTree.__is_red(node.right) and not TradeTree.__is_red(node.left):
             node = TradeTree.__rotate_left(node)
-
         if TradeTree.__is_red(node.left) and TradeTree.__is_red(node.left.left):
             node = TradeTree.__rotate_right(node)
 
+        # Flip colors if required
         if TradeTree.__is_red(node.left) and TradeTree.__is_red(node.right):
             TradeTree.__flip_colors(node)
 

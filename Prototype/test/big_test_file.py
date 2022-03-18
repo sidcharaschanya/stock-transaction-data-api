@@ -1,9 +1,6 @@
 from src.stocks.trade import Trade
 from src.stocks.platform import StockTradingPlatform
 from src.stocks.trade_tree import TradeTree
-
-# ==================== INCLUDE BELOW IN JUPYTER NOTEBOOK ====================
-
 from unittest import TestCase, defaultTestLoader, TextTestRunner
 from datetime import datetime, timedelta
 from random import choice, seed, uniform, randint
